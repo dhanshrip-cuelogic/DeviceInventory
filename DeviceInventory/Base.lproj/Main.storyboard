@@ -153,11 +153,109 @@
                         <outlet property="errorTextField" destination="KJ1-b0-Kzq" id="zEl-CZ-fwm"/>
                         <outlet property="loginButton" destination="2K3-Me-gqI" id="iYM-uG-abq"/>
                         <outlet property="passwordTextField" destination="mee-gA-U82" id="nib-6u-zE0"/>
+                        <segue destination="cfo-Nv-5Ha" kind="show" identifier="redirectToPlatformSelectionPage" id="fz0-X9-ABs"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HaP-LN-BXT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1882.608695652174" y="99.776785714285708"/>
+        </scene>
+        <!--Change Password-->
+        <scene sceneID="ZoB-t8-hdd">
+            <objects>
+                <viewController id="je9-dt-bzN" customClass="ChangePassword" customModule="DeviceInventory" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="1fG-53-44n">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="back" translatesAutoresizingMaskIntoConstraints="NO" id="5Ll-nv-ADr">
+                                <rect key="frame" x="0.0" y="88" width="414" height="748"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="7qX-Yq-w9G">
+                                <rect key="frame" x="72.5" y="188" width="269" height="153.5"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your new password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Ctl-ZO-Wt7">
+                                        <rect key="frame" x="0.0" y="0.0" width="269" height="34"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                    </textField>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="taH-0N-eVO">
+                                        <rect key="frame" x="0.0" y="64" width="269" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hda-e9-DLI">
+                                        <rect key="frame" x="0.0" y="114.5" width="269" height="39"/>
+                                        <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                        <state key="normal" title="Confirm Changes">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="confirmChangingPasswordButton:" destination="je9-dt-bzN" eventType="touchUpInside" id="vgd-vV-6pH"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="7qX-Yq-w9G" firstAttribute="centerX" secondItem="SsL-vF-FQz" secondAttribute="centerX" id="3lF-NC-Djh"/>
+                            <constraint firstItem="7qX-Yq-w9G" firstAttribute="width" secondItem="SsL-vF-FQz" secondAttribute="width" multiplier="0.65" id="6R1-hJ-BEn"/>
+                            <constraint firstItem="7qX-Yq-w9G" firstAttribute="top" secondItem="SsL-vF-FQz" secondAttribute="top" constant="100" id="ohg-lF-gxy"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="SsL-vF-FQz"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Ebe-gC-MHv"/>
+                    <connections>
+                        <outlet property="changePasswordNewPasswordTextField" destination="Ctl-ZO-Wt7" id="iWA-qk-9Wc"/>
+                        <outlet property="errorLabel" destination="taH-0N-eVO" id="Uw4-GP-oUF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ze7-Yk-jS2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4004" y="-364"/>
+        </scene>
+        <!--Platform Selection Page-->
+        <scene sceneID="aYJ-3y-Ue6">
+            <objects>
+                <viewController storyboardIdentifier="PlatformSelectionPage" id="cfo-Nv-5Ha" customClass="PlatformSelectionPage" customModule="DeviceInventory" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="53j-0P-9CQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="back" translatesAutoresizingMaskIntoConstraints="NO" id="ePt-US-ODg">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Welcome to platform selection page." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xCX-Ut-uz8">
+                                <rect key="frame" x="71" y="367" width="272" height="65"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="OX8-g7-jkG"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="iHE-Me-Xoa">
+                        <barButtonItem key="rightBarButtonItem" title="Change Password" id="UlB-wm-EzS">
+                            <connections>
+                                <action selector="changePasswordButtonClicked:" destination="cfo-Nv-5Ha" id="Vwg-Kt-ctb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <segue destination="je9-dt-bzN" kind="show" identifier="redirectToChangePasswordPage" id="IPE-SY-7nS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ytp-iz-NCD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3060.8695652173915" y="99.776785714285708"/>
         </scene>
         <!--Sign Up Page-->
         <scene sceneID="aip-kY-Ru4">
@@ -273,7 +371,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q5O-UG-rPn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2698.5507246376815" y="99.776785714285708"/>
+            <point key="canvasLocation" x="2732" y="832"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="gKp-ME-laH">

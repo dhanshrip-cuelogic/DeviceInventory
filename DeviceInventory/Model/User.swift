@@ -7,8 +7,12 @@
 //
 
 import Foundation
-
-enum User {
+/*
+ This is used to show functionality according to the user.
+ If the user is Admin then he can perform CRUD Operations on devices.
+ If the user is Employee then he can only see details and issue device.
+ */
+ enum User {
     case admin
     case employee
 }

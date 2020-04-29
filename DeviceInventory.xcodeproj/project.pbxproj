@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		2146D2EE6F035BB60BEABFEE /* Pods_DeviceInventory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 626DB806E90DE48C0C0B9F85 /* Pods_DeviceInventory.framework */; };
+		99461A4A245A03C500E32B14 /* PlatformSelectionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99461A49245A03C500E32B14 /* PlatformSelectionPage.swift */; };
+		99461A4C245A06B100E32B14 /* PlatformSelectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99461A4B245A06B100E32B14 /* PlatformSelectionPresenter.swift */; };
 		9961DAA42456D08E00723633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DAA32456D08E00723633 /* AppDelegate.swift */; };
 		9961DAA62456D08E00723633 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DAA52456D08E00723633 /* SceneDelegate.swift */; };
 		9961DAA82456D08E00723633 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DAA72456D08E00723633 /* ViewController.swift */; };
@@ -16,6 +18,8 @@
 		9961DAB02456D09500723633 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9961DAAE2456D09500723633 /* LaunchScreen.storyboard */; };
 		9961DAB82456DA7B00723633 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DAB72456DA7B00723633 /* HomeScreen.swift */; };
 		9961DABA2456E6A100723633 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DAB92456E6A100723633 /* LoginPage.swift */; };
+		998A6F8D2459977900624C3D /* ChangePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A6F8C2459977900624C3D /* ChangePassword.swift */; };
+		998A6F8F24599CF500624C3D /* ChangePasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A6F8E24599CF500624C3D /* ChangePasswordPresenter.swift */; };
 		999C781124571438005DA8DB /* HomeScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C781024571438005DA8DB /* HomeScreenPresenter.swift */; };
 		999C781324571CA9005DA8DB /* LoginPesenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C781224571CA9005DA8DB /* LoginPesenter.swift */; };
 		999C781624571D05005DA8DB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C781524571D05005DA8DB /* User.swift */; };
@@ -28,6 +32,8 @@
 		55F7D686DDB9C49AC1D0609C /* Pods-DeviceInventory.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeviceInventory.debug.xcconfig"; path = "Target Support Files/Pods-DeviceInventory/Pods-DeviceInventory.debug.xcconfig"; sourceTree = "<group>"; };
 		626DB806E90DE48C0C0B9F85 /* Pods_DeviceInventory.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DeviceInventory.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8F5AA8727A018B9E55F37E06 /* Pods-DeviceInventory.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DeviceInventory.release.xcconfig"; path = "Target Support Files/Pods-DeviceInventory/Pods-DeviceInventory.release.xcconfig"; sourceTree = "<group>"; };
+		99461A49245A03C500E32B14 /* PlatformSelectionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformSelectionPage.swift; sourceTree = "<group>"; };
+		99461A4B245A06B100E32B14 /* PlatformSelectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformSelectionPresenter.swift; sourceTree = "<group>"; };
 		9961DAA02456D08E00723633 /* DeviceInventory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeviceInventory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9961DAA32456D08E00723633 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9961DAA52456D08E00723633 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -38,6 +44,8 @@
 		9961DAB12456D09500723633 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9961DAB72456DA7B00723633 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		9961DAB92456E6A100723633 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
+		998A6F8C2459977900624C3D /* ChangePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassword.swift; sourceTree = "<group>"; };
+		998A6F8E24599CF500624C3D /* ChangePasswordPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordPresenter.swift; sourceTree = "<group>"; };
 		999C781024571438005DA8DB /* HomeScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenPresenter.swift; sourceTree = "<group>"; };
 		999C781224571CA9005DA8DB /* LoginPesenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPesenter.swift; sourceTree = "<group>"; };
 		999C781524571D05005DA8DB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -108,6 +116,8 @@
 				9961DAB72456DA7B00723633 /* HomeScreen.swift */,
 				9961DAB92456E6A100723633 /* LoginPage.swift */,
 				99D041132458302900CC0AD0 /* SignUpPage.swift */,
+				998A6F8C2459977900624C3D /* ChangePassword.swift */,
+				99461A49245A03C500E32B14 /* PlatformSelectionPage.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -118,6 +128,8 @@
 				999C781024571438005DA8DB /* HomeScreenPresenter.swift */,
 				999C781224571CA9005DA8DB /* LoginPesenter.swift */,
 				99D041172458C5EE00CC0AD0 /* SignUpPresenter.swift */,
+				998A6F8E24599CF500624C3D /* ChangePasswordPresenter.swift */,
+				99461A4B245A06B100E32B14 /* PlatformSelectionPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -262,7 +274,11 @@
 				9961DAA42456D08E00723633 /* AppDelegate.swift in Sources */,
 				999C781624571D05005DA8DB /* User.swift in Sources */,
 				999C781324571CA9005DA8DB /* LoginPesenter.swift in Sources */,
+				99461A4A245A03C500E32B14 /* PlatformSelectionPage.swift in Sources */,
 				9961DABA2456E6A100723633 /* LoginPage.swift in Sources */,
+				998A6F8D2459977900624C3D /* ChangePassword.swift in Sources */,
+				99461A4C245A06B100E32B14 /* PlatformSelectionPresenter.swift in Sources */,
+				998A6F8F24599CF500624C3D /* ChangePasswordPresenter.swift in Sources */,
 				99D041182458C5EE00CC0AD0 /* SignUpPresenter.swift in Sources */,
 				9961DAA62456D08E00723633 /* SceneDelegate.swift in Sources */,
 			);

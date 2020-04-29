@@ -21,18 +21,18 @@ class HomeScreen: UIViewController, HomeScreenProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
       
-        //Set background image -
+//        Set background image -
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
         backgroundImage.image = UIImage(named: "back")
         backgroundImage.contentMode =  UIView.ContentMode.scaleAspectFill
         self.view.insertSubview(backgroundImage, at: 0)
         
         
-        //To curve borders of button -
-//        adminButton.layer.cornerRadius = 35.0
-//        employeeButton.layer.cornerRadius = 35.0
+//        To curve borders of button -
+        adminButton.layer.cornerRadius = 25.0
+        employeeButton.layer.cornerRadius = 25.0
         
-        //To set HomeScreen as delegate to HomeScreenProtocol
+//        To set HomeScreen as delegate to HomeScreenProtocol
         homeScreenPresenter.homeScreenDelegate = self
 
         
@@ -46,7 +46,7 @@ class HomeScreen: UIViewController, HomeScreenProtocol {
         homeScreenPresenter.whenEmployeeButtonIsClicked()
     }
     
-    //Method from HomeScreenProtocol
+//    Method from HomeScreenProtocol to perform segue for Login Page.
     func performSegue() {
         if homeScreenPresenter.user == .admin {
            user = "admin"
@@ -55,7 +55,8 @@ class HomeScreen: UIViewController, HomeScreenProtocol {
         }
            performSegue(withIdentifier: "redirectToLoginPage", sender: self)
        }
-    
+   
+//    Passing user for showing data related to user.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         let loginPage = segue.destination as! LoginPage

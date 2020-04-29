@@ -19,38 +19,40 @@ protocol SignUpProtocol {
 class SignUpPresenter {
     
     var signUpDelegate : SignUpProtocol?
-    
     var signUpEmailFromSignUpPage : String?
     var signUpPasswordFromSignUpPage : String?
     var signUpCueIDFromSignUpPage : String?
     
+//  When user has clicked in SignUp button it will vlidate fields and create new user and It will save details of user.
     func whenSignUpButtonClicked() {
-        //validate fields
+//        validate fields
         let error = validateFields()
         
-        //if error while validating fields
+//        if error while validating fields then display error on screen.
         if error != nil {
             showError(error!)
         }else {
-            //cleaned data after validation
+//           cleaned data after validation
             let email = signUpEmailFromSignUpPage?.trimmingCharacters(in: .whitespacesAndNewlines)
             let password = signUpPasswordFromSignUpPage?.trimmingCharacters(in: .whitespacesAndNewlines)
             let cueid = signUpCueIDFromSignUpPage?.trimmingCharacters(in: .whitespacesAndNewlines)
             
-            //create user
+//           create user with the email, CueID and Password.
             Auth.auth().createUser(withEmail: email!, password: password!) { (result, err) in
                 if err != nil {
                     self.showError("Error while creating user.")
                 }else {
-                     //save CueID
+//                     If user has created account successfully then the CueID will get saved into database.
                     let db = Firestore.firestore()
                     
+//                    adding CueID into Employee database with the unique id of new email for refencr purpose.
                     db.collection("Employee").addDocument(data: ["CueID" : cueid! , "uid" : result!.user.uid]) { (error) in
                         if error != nil {
+//                            If error while saving CueID then it will display the error on screen.
                             self.showError("Could not be able to save CueID")
                         }
                     }
-                     //transition to next page
+//                     After creating new user then transition to login page.
                     print("sign up successfull !!!!!")
                     self.performTransition()
                 }
@@ -58,6 +60,7 @@ class SignUpPresenter {
         }
     }
     
+//        Function to validate all the text fields whether they are empty or are properly filled.
     func validateFields() -> String? {
         let passwordValidate = validatePassword()
         let emailValidate = validateEmail()
@@ -77,16 +80,19 @@ class SignUpPresenter {
         return nil
     }
     
+//        If there is any error while doing the process of sign up, it will display the error on screen.
     func showError(_ message : String) {
         signUpDelegate?.errorTextFieldOfSignUpPage!.text = message
         signUpDelegate?.errorTextFieldOfSignUpPage!.alpha = 1
     }
     
+//    After having successful SignUp it will transit to Login page for SignIn.
     func performTransition() {
         let loginpage = signUpDelegate?.storyboardFromSignUpPage!.instantiateViewController(identifier: "Loginpage") as! LoginPage
-            signUpDelegate?.viewFromSignUpPage!.window?.rootViewController = loginpage
+        signUpDelegate?.viewFromSignUpPage!.window?.rootViewController = loginpage
     }
     
+//    It will validate password with the given regular expression.
     func validatePassword() -> Bool? {
         let passwordRegEx = "^([A-Z]+)([a-z]?.*)([!@#$%^&*.].*)([0-9].*)$"
         let passwordTest = NSPredicate(format:"SELF MATCHES %@", passwordRegEx)
@@ -94,6 +100,7 @@ class SignUpPresenter {
         return passwordResult
     }
     
+//    It will validate email with the given regular expression.
     func validateEmail() -> Bool? {
         let emailRegEx = "^([a-z]+)([.]{1})([a-z]+)(@cuelogic.com)$"
         let emailTest = NSPredicate(format:"SELF MATCHES %@", emailRegEx)
@@ -101,6 +108,7 @@ class SignUpPresenter {
         return emailResult
     }
     
+//    It will validate CueID with the given regular expression.
     func validateCueID() -> Bool? {
         let cueIdRegEx = "^(Cue)([0-9]{5})$"
         let cueIdTest = NSPredicate(format:"SELF MATCHES %@", cueIdRegEx)

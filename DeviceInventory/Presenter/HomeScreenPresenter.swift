@@ -18,7 +18,7 @@ class HomeScreenPresenter {
     var homeScreenDelegate : HomeScreenProtocol?
     var user : User?
 
-    
+//     When user is selected it will send the user value to further viewcontrollers to show relevent data accordingly.
     func whenAdminButtonIsClicked() {
         user = .admin
         homeScreenDelegate?.performSegue()
@@ -28,7 +28,5 @@ class HomeScreenPresenter {
         user = .employee
         homeScreenDelegate?.performSegue()
     }
-
-    
 }
 
