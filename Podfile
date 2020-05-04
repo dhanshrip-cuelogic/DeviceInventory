@@ -9,7 +9,6 @@ target 'DeviceInventory' do
 pod 'Firebase/Analytics'
 pod 'Firebase/Auth'
 pod 'Firebase/Firestore'
-
-
-
+pod 'Firebase/Database'
+pod 'CodableFirebase'
 end

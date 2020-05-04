@@ -9,23 +9,23 @@
 import Foundation
 
 protocol HomeScreenProtocol {
-//    var user : User? { get set }
+    var user : User? { get set }
     func performSegue()
 }
 
 class HomeScreenPresenter {
     
     var homeScreenDelegate : HomeScreenProtocol?
-    var user : User?
+//    var user : User?
 
 //     When user is selected it will send the user value to further viewcontrollers to show relevent data accordingly.
     func whenAdminButtonIsClicked() {
-        user = .admin
+        homeScreenDelegate?.user = .admin
         homeScreenDelegate?.performSegue()
     }
     
     func whenEmployeeButtonIsClicked() {
-        user = .employee
+        homeScreenDelegate?.user = .employee
         homeScreenDelegate?.performSegue()
     }
 }

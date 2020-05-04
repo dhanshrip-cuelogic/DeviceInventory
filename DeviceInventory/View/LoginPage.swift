@@ -13,7 +13,7 @@ class LoginPage: UIViewController , LoginPageProtocol {
     
     var errorTextFieldOfLoginPage : UILabel?
     
-    var user : String?
+    var user : User?
     
     let loginPresenter = LoginPresenter()
     
@@ -49,5 +49,9 @@ class LoginPage: UIViewController , LoginPageProtocol {
         performSegue(withIdentifier: "redirectToPlatformSelectionPage", sender: self)
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let platformSelectionPage = segue.destination as! PlatformSelectionPage
+        platformSelectionPage.user = user
     }
+}
 

@@ -12,7 +12,7 @@ class HomeScreen: UIViewController, HomeScreenProtocol {
     
     private let homeScreenPresenter = HomeScreenPresenter()
     
-    var user : String?
+    var user : User?
     
     @IBOutlet weak var adminButton: UIButton!
     
@@ -48,17 +48,11 @@ class HomeScreen: UIViewController, HomeScreenProtocol {
     
 //    Method from HomeScreenProtocol to perform segue for Login Page.
     func performSegue() {
-        if homeScreenPresenter.user == .admin {
-           user = "admin"
-        }else {
-            user = "employee"
-        }
            performSegue(withIdentifier: "redirectToLoginPage", sender: self)
        }
    
 //    Passing user for showing data related to user.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
         let loginPage = segue.destination as! LoginPage
         loginPage.user = user
     }
