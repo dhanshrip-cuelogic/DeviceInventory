@@ -12,6 +12,13 @@
 		990C965F245DE66C006D6B74 /* DatabaseManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990C965E245DE66C006D6B74 /* DatabaseManager.swift */; };
 		990C9661245DE987006D6B74 /* DeviceDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990C9660245DE987006D6B74 /* DeviceDetails.swift */; };
 		990C9663245DEA3F006D6B74 /* Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 990C9662245DEA3F006D6B74 /* Status.swift */; };
+		9925657F2462E6BF00F7EA20 /* DisplayDetailsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925657E2462E6BF00F7EA20 /* DisplayDetailsPage.swift */; };
+		992565812462E6F300F7EA20 /* DisplayDevicePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992565802462E6F300F7EA20 /* DisplayDevicePresenter.swift */; };
+		992565882463103700F7EA20 /* DeviceHistoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 992565862463103700F7EA20 /* DeviceHistoryCell.swift */; };
+		992565892463103700F7EA20 /* DeviceHistoryCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 992565872463103700F7EA20 /* DeviceHistoryCell.xib */; };
+		9925658B246327DF00F7EA20 /* DeviceHistoryPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925658A246327DF00F7EA20 /* DeviceHistoryPage.swift */; };
+		9925658D24632B0600F7EA20 /* IssuedDevices.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925658C24632B0600F7EA20 /* IssuedDevices.swift */; };
+		9925658F24632CC400F7EA20 /* DeviceHistoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925658E24632CC400F7EA20 /* DeviceHistoryPresenter.swift */; };
 		99461A4A245A03C500E32B14 /* PlatformSelectionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99461A49245A03C500E32B14 /* PlatformSelectionPage.swift */; };
 		99461A4C245A06B100E32B14 /* PlatformSelectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99461A4B245A06B100E32B14 /* PlatformSelectionPresenter.swift */; };
 		9961DAA42456D08E00723633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DAA32456D08E00723633 /* AppDelegate.swift */; };
@@ -27,6 +34,8 @@
 		9966B7472460086700D96B95 /* DeviceListForAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9966B7462460086700D96B95 /* DeviceListForAdmin.swift */; };
 		9966B749246008AB00D96B95 /* DeviceListForAdminPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9966B748246008AB00D96B95 /* DeviceListForAdminPresenter.swift */; };
 		9966B74B2460236800D96B95 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9966B74A2460236800D96B95 /* Platform.swift */; };
+		9966B74D246090C600D96B95 /* DeviceDetailsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9966B74C246090C600D96B95 /* DeviceDetailsPage.swift */; };
+		9966B74F24609A8A00D96B95 /* DeviceDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9966B74E24609A8A00D96B95 /* DeviceDetailsPresenter.swift */; };
 		998A6F8D2459977900624C3D /* ChangePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A6F8C2459977900624C3D /* ChangePassword.swift */; };
 		998A6F8F24599CF500624C3D /* ChangePasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A6F8E24599CF500624C3D /* ChangePasswordPresenter.swift */; };
 		999C781124571438005DA8DB /* HomeScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C781024571438005DA8DB /* HomeScreenPresenter.swift */; };
@@ -34,6 +43,8 @@
 		999C781624571D05005DA8DB /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C781524571D05005DA8DB /* User.swift */; };
 		99D041142458302900CC0AD0 /* SignUpPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D041132458302900CC0AD0 /* SignUpPage.swift */; };
 		99D041182458C5EE00CC0AD0 /* SignUpPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D041172458C5EE00CC0AD0 /* SignUpPresenter.swift */; };
+		99E09710246173DE005303FF /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99E0970E246173DE005303FF /* TableViewCell.swift */; };
+		99E09711246173DE005303FF /* TableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 99E0970F246173DE005303FF /* TableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +55,13 @@
 		990C965E245DE66C006D6B74 /* DatabaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseManager.swift; sourceTree = "<group>"; };
 		990C9660245DE987006D6B74 /* DeviceDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetails.swift; sourceTree = "<group>"; };
 		990C9662245DEA3F006D6B74 /* Status.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Status.swift; sourceTree = "<group>"; };
+		9925657E2462E6BF00F7EA20 /* DisplayDetailsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDetailsPage.swift; sourceTree = "<group>"; };
+		992565802462E6F300F7EA20 /* DisplayDevicePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisplayDevicePresenter.swift; sourceTree = "<group>"; };
+		992565862463103700F7EA20 /* DeviceHistoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceHistoryCell.swift; sourceTree = "<group>"; };
+		992565872463103700F7EA20 /* DeviceHistoryCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DeviceHistoryCell.xib; sourceTree = "<group>"; };
+		9925658A246327DF00F7EA20 /* DeviceHistoryPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceHistoryPage.swift; sourceTree = "<group>"; };
+		9925658C24632B0600F7EA20 /* IssuedDevices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IssuedDevices.swift; sourceTree = "<group>"; };
+		9925658E24632CC400F7EA20 /* DeviceHistoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceHistoryPresenter.swift; sourceTree = "<group>"; };
 		99461A49245A03C500E32B14 /* PlatformSelectionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformSelectionPage.swift; sourceTree = "<group>"; };
 		99461A4B245A06B100E32B14 /* PlatformSelectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformSelectionPresenter.swift; sourceTree = "<group>"; };
 		9961DAA02456D08E00723633 /* DeviceInventory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeviceInventory.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +79,8 @@
 		9966B7462460086700D96B95 /* DeviceListForAdmin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListForAdmin.swift; sourceTree = "<group>"; };
 		9966B748246008AB00D96B95 /* DeviceListForAdminPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListForAdminPresenter.swift; sourceTree = "<group>"; };
 		9966B74A2460236800D96B95 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
+		9966B74C246090C600D96B95 /* DeviceDetailsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsPage.swift; sourceTree = "<group>"; };
+		9966B74E24609A8A00D96B95 /* DeviceDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsPresenter.swift; sourceTree = "<group>"; };
 		998A6F8C2459977900624C3D /* ChangePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassword.swift; sourceTree = "<group>"; };
 		998A6F8E24599CF500624C3D /* ChangePasswordPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordPresenter.swift; sourceTree = "<group>"; };
 		999C781024571438005DA8DB /* HomeScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenPresenter.swift; sourceTree = "<group>"; };
@@ -68,6 +88,8 @@
 		999C781524571D05005DA8DB /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		99D041132458302900CC0AD0 /* SignUpPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPage.swift; sourceTree = "<group>"; };
 		99D041172458C5EE00CC0AD0 /* SignUpPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpPresenter.swift; sourceTree = "<group>"; };
+		99E0970E246173DE005303FF /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		99E0970F246173DE005303FF /* TableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -145,6 +167,13 @@
 				99461A49245A03C500E32B14 /* PlatformSelectionPage.swift */,
 				99660D8F245AE30F006F4EE2 /* DeviceListForEmployee.swift */,
 				9966B7462460086700D96B95 /* DeviceListForAdmin.swift */,
+				9966B74C246090C600D96B95 /* DeviceDetailsPage.swift */,
+				9925657E2462E6BF00F7EA20 /* DisplayDetailsPage.swift */,
+				9925658A246327DF00F7EA20 /* DeviceHistoryPage.swift */,
+				99E0970E246173DE005303FF /* TableViewCell.swift */,
+				99E0970F246173DE005303FF /* TableViewCell.xib */,
+				992565862463103700F7EA20 /* DeviceHistoryCell.swift */,
+				992565872463103700F7EA20 /* DeviceHistoryCell.xib */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -159,6 +188,9 @@
 				99461A4B245A06B100E32B14 /* PlatformSelectionPresenter.swift */,
 				99660D91245AF150006F4EE2 /* DeviceListForEmployeePresenter.swift */,
 				9966B748246008AB00D96B95 /* DeviceListForAdminPresenter.swift */,
+				9966B74E24609A8A00D96B95 /* DeviceDetailsPresenter.swift */,
+				992565802462E6F300F7EA20 /* DisplayDevicePresenter.swift */,
+				9925658E24632CC400F7EA20 /* DeviceHistoryPresenter.swift */,
 			);
 			path = Presenter;
 			sourceTree = "<group>";
@@ -170,6 +202,7 @@
 				990C9660245DE987006D6B74 /* DeviceDetails.swift */,
 				990C9662245DEA3F006D6B74 /* Status.swift */,
 				9966B74A2460236800D96B95 /* Platform.swift */,
+				9925658C24632B0600F7EA20 /* IssuedDevices.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -244,6 +277,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				9961DAB02456D09500723633 /* LaunchScreen.storyboard in Resources */,
+				99E09711246173DE005303FF /* TableViewCell.xib in Resources */,
+				992565892463103700F7EA20 /* DeviceHistoryCell.xib in Resources */,
 				990C965C245DA59A006D6B74 /* GoogleService-Info.plist in Resources */,
 				9961DAAD2456D09500723633 /* Assets.xcassets in Resources */,
 				9961DAAB2456D08E00723633 /* Main.storyboard in Resources */,
@@ -299,14 +334,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9925658F24632CC400F7EA20 /* DeviceHistoryPresenter.swift in Sources */,
 				9961DAB82456DA7B00723633 /* HomeScreen.swift in Sources */,
 				999C781124571438005DA8DB /* HomeScreenPresenter.swift in Sources */,
+				9925657F2462E6BF00F7EA20 /* DisplayDetailsPage.swift in Sources */,
 				9966B749246008AB00D96B95 /* DeviceListForAdminPresenter.swift in Sources */,
+				992565882463103700F7EA20 /* DeviceHistoryCell.swift in Sources */,
 				9961DAA82456D08E00723633 /* ViewController.swift in Sources */,
 				99D041142458302900CC0AD0 /* SignUpPage.swift in Sources */,
 				990C965F245DE66C006D6B74 /* DatabaseManager.swift in Sources */,
 				9966B74B2460236800D96B95 /* Platform.swift in Sources */,
 				9961DAA42456D08E00723633 /* AppDelegate.swift in Sources */,
+				9925658D24632B0600F7EA20 /* IssuedDevices.swift in Sources */,
 				999C781624571D05005DA8DB /* User.swift in Sources */,
 				99660D90245AE30F006F4EE2 /* DeviceListForEmployee.swift in Sources */,
 				999C781324571CA9005DA8DB /* LoginPesenter.swift in Sources */,
@@ -314,11 +353,16 @@
 				9961DABA2456E6A100723633 /* LoginPage.swift in Sources */,
 				99660D92245AF150006F4EE2 /* DeviceListForEmployeePresenter.swift in Sources */,
 				990C9661245DE987006D6B74 /* DeviceDetails.swift in Sources */,
+				992565812462E6F300F7EA20 /* DisplayDevicePresenter.swift in Sources */,
 				998A6F8D2459977900624C3D /* ChangePassword.swift in Sources */,
 				99461A4C245A06B100E32B14 /* PlatformSelectionPresenter.swift in Sources */,
 				998A6F8F24599CF500624C3D /* ChangePasswordPresenter.swift in Sources */,
+				9966B74D246090C600D96B95 /* DeviceDetailsPage.swift in Sources */,
 				99D041182458C5EE00CC0AD0 /* SignUpPresenter.swift in Sources */,
+				99E09710246173DE005303FF /* TableViewCell.swift in Sources */,
+				9925658B246327DF00F7EA20 /* DeviceHistoryPage.swift in Sources */,
 				990C9663245DEA3F006D6B74 /* Status.swift in Sources */,
+				9966B74F24609A8A00D96B95 /* DeviceDetailsPresenter.swift in Sources */,
 				9961DAA62456D08E00723633 /* SceneDelegate.swift in Sources */,
 				9966B7472460086700D96B95 /* DeviceListForAdmin.swift in Sources */,
 			);

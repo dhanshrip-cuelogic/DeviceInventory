@@ -15,7 +15,6 @@ class SignUpPage: UIViewController, SignUpProtocol {
     var storyboardFromSignUpPage: UIStoryboard?
     var viewFromSignUpPage: UIView?
     var errorTextFieldOfSignUpPage: UILabel?
-    
     let signUpPresenter = SignUpPresenter()
 
     @IBOutlet weak var signUpEmailTextField: UITextField!
@@ -25,23 +24,22 @@ class SignUpPage: UIViewController, SignUpProtocol {
     @IBOutlet weak var signUpButton: UIButton!
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
-//        To set this SignUp page as delegate to its Presenter and set storyboard and view for transition purpose.
-        errorTextField.alpha = 0
-        signUpButton.layer.cornerRadius = 20.0
-        signUpPresenter.signUpDelegate = self as SignUpProtocol
-        storyboardFromSignUpPage = storyboard
-        viewFromSignUpPage = view
-        
+       super.viewDidLoad()
+        signUpPresenter.databaseReference()
+       // To set this SignUp page as delegate to its Presenter and set storyboard and view for transition purpose.
+       errorTextField.alpha = 0
+       signUpButton.layer.cornerRadius = 20.0
+       signUpPresenter.signUpDelegate = self as SignUpProtocol
+       storyboardFromSignUpPage = storyboard
+       viewFromSignUpPage = view
     }
     
-//    For redirection to Login Page on successfull signUp of new user.
+    // For redirection to Login Page on successfull signUp of new user.
     @IBAction func redirectToLoginButtonClicked(_ sender: UIButton) {
         signUpPresenter.performTransition()
     }
 
-//    When signUp button is clicked it will send the data from textfields to the presenter for validation and creation of new user.
+    // When signUp button is clicked it will send the data from textfields to the presenter for validation and creation of new user.
     @IBAction func SignUpButtonClicked(_ sender: UIButton) {
         signUpPresenter.signUpEmailFromSignUpPage = signUpEmailTextField.text!
         signUpPresenter.signUpPasswordFromSignUpPage = signUpPasswordTextField.text!

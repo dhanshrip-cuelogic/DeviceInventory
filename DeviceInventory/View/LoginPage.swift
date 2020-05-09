@@ -12,9 +12,7 @@ import Firebase
 class LoginPage: UIViewController , LoginPageProtocol {
     
     var errorTextFieldOfLoginPage : UILabel?
-    
     var user : User?
-    
     let loginPresenter = LoginPresenter()
     
     @IBOutlet weak var emailTextField: UITextField!
@@ -24,8 +22,7 @@ class LoginPage: UIViewController , LoginPageProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-     
-//        To set radius to the borders of button and Set this login page as delegate of its presenter.
+        // To set radius to the borders of button and Set this login page as delegate of its presenter.
         errorTextField.alpha = 0
         loginButton.layer.cornerRadius = 20.0
         loginPresenter.loginDelegate = self
@@ -33,10 +30,10 @@ class LoginPage: UIViewController , LoginPageProtocol {
     }
     
     @IBAction func redirectToSignUpButtonClicked(_ sender: UIButton) {
-//            loginPresenter.transitionToSignUp()
+        // loginPresenter.transitionToSignUp()
     }
     
-//    When login button is clicked it will call the function from presenter for functionality.
+    // When login button is clicked it will call the function from presenter for functionality.
     @IBAction func loginButtonClicked(_ sender: UIButton) {
         loginPresenter.emailTextFromLoginPage = emailTextField.text!
         loginPresenter.passwordTextFromLoginPage = passwordTextField.text!
@@ -44,14 +41,16 @@ class LoginPage: UIViewController , LoginPageProtocol {
         loginPresenter.whenLoginButtonIsClicked()
     }
     
-//    Function to perform redirection on successfull SignIn from Login Page to Platform Selection page.
+    // Function to perform redirection on successfull SignIn from Login Page to Platform Selection page.
     func transtionToPlatformSelection() {
         performSegue(withIdentifier: "redirectToPlatformSelectionPage", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let platformSelectionPage = segue.destination as! PlatformSelectionPage
-        platformSelectionPage.user = user
+        if segue.identifier == "redirectToPlatformSelectionPage" {
+            let platformSelectionPage = segue.destination as! PlatformSelectionPage
+            platformSelectionPage.user = user
+        }
     }
 }
 

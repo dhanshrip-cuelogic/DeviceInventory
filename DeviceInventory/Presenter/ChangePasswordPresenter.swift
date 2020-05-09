@@ -21,19 +21,18 @@ class ChangePasswordPresenter {
     var changePasswordDelegate : ChangePasswordProtocol?
     var newPasswordFromChangePasswordPage : String?
     
-//    When Change Password Button is clicked it will validate the password.
-//    If it is filled correctly then it will update old password with new password.
+    // When Change Password Button is clicked it will validate the password.
+    // If it is filled correctly then it will update old password with new password.
     func whenChangePasswordButtonPressed() {
         let error = validateFields()
         
         if error != nil {
             showError(error!)
         }else {
-            
-//             Take cleaned data from text fields
+            // Take cleaned data from text fields
             let newPassword = newPasswordFromChangePasswordPage?.trimmingCharacters(in: .whitespacesAndNewlines)
             
-//            Update password with new password and redirect to Platform Selection Page.
+            // Update password with new password and redirect to Platform Selection Page.
             Auth.auth().currentUser?.updatePassword(to: newPassword!, completion: { (error) in
                 if error != nil {
                     self.showError("Error in changing password.")
@@ -46,13 +45,13 @@ class ChangePasswordPresenter {
         }
     }
     
-//    Redirect to platform selection page using storyboardID.
+    // Redirect to platform selection page using storyboardID.
     func redirectToPlatformSelectionPage() {
         let platformSelectionPage = changePasswordDelegate?.storyBoardFromChangePasswordPage?.instantiateViewController(identifier: "PlatformSelectionPage")
         changePasswordDelegate?.viewFromChangePasswordPage?.window?.rootViewController = platformSelectionPage
     }
     
-//    Validate new password with regular expression.
+    // Validate new password with regular expression.
     func validateNewPassword() -> Bool? {
         let passwordRegEx = "^([A-Z]+)([a-z]?.*)([!@#$%^&*.].*)([0-9].*)$"
         let passwordTest = NSPredicate(format:"SELF MATCHES %@", passwordRegEx)
@@ -60,7 +59,7 @@ class ChangePasswordPresenter {
         return newPasswordResult
     }
     
-//    Validate whether the field is empty or not.
+    // Validate whether the field is empty or not.
     func validateFields() -> String? {
         let newPasswordValidate = validateNewPassword()
      
@@ -73,7 +72,7 @@ class ChangePasswordPresenter {
         return nil
     }
     
-//    Display error on screen.
+    // Display error on screen.
     func showError(_ message : String) {
          changePasswordDelegate?.errorTextFieldFromChangePasswordPage!.text = message
          changePasswordDelegate?.errorTextFieldFromChangePasswordPage!.alpha = 1

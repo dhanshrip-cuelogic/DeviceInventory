@@ -11,31 +11,25 @@ import UIKit
 class HomeScreen: UIViewController, HomeScreenProtocol {
     
     private let homeScreenPresenter = HomeScreenPresenter()
-    
     var user : User?
     
     @IBOutlet weak var adminButton: UIButton!
-    
     @IBOutlet weak var employeeButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-      
-//        Set background image -
+        // Set background image -
         let backgroundImage = UIImageView(frame: UIScreen.main.bounds)
         backgroundImage.image = UIImage(named: "back")
         backgroundImage.contentMode =  UIView.ContentMode.scaleAspectFill
         self.view.insertSubview(backgroundImage, at: 0)
         
-        
-//        To curve borders of button -
+        // To curve borders of button -
         adminButton.layer.cornerRadius = 25.0
         employeeButton.layer.cornerRadius = 25.0
         
-//        To set HomeScreen as delegate to HomeScreenProtocol
+        // To set HomeScreen as delegate to HomeScreenProtocol
         homeScreenPresenter.homeScreenDelegate = self
-
-        
     }
     
     @IBAction func adminButtonClicked(_ sender: UIButton) {
@@ -46,15 +40,14 @@ class HomeScreen: UIViewController, HomeScreenProtocol {
         homeScreenPresenter.whenEmployeeButtonIsClicked()
     }
     
-//    Method from HomeScreenProtocol to perform segue for Login Page.
+    // Method from HomeScreenProtocol to perform segue for Login Page.
     func performSegue() {
-           performSegue(withIdentifier: "redirectToLoginPage", sender: self)
-       }
+        performSegue(withIdentifier: "redirectToLoginPage", sender: self)
+    }
    
-//    Passing user for showing data related to user.
+    // Passing user for showing data related to user.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let loginPage = segue.destination as! LoginPage
         loginPage.user = user
     }
-    
 }

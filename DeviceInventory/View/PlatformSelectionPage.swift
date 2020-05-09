@@ -19,11 +19,15 @@ class PlatformSelectionPage: UIViewController, PlatformSelectionProtocol {
     
     override func viewDidLoad() {
        super.viewDidLoad()
-        androidButton.layer.cornerRadius = 70.0
-        iOSButton.layer.cornerRadius = 70.0
+
         platformSelectionPresenter.platformSelectionDelegate = self
         platformSelectionPresenter.userFromDelegate = user
        }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        androidButton.layer.cornerRadius = 70.0
+            iOSButton.layer.cornerRadius = 70.0
+    }
     
     @IBAction func androidButtonClicked(_ sender: UIButton) {
         platform = .Android

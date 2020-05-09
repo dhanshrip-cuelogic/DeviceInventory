@@ -20,7 +20,7 @@ class PlatformSelectionPresenter {
     var platformSelectionDelegate : PlatformSelectionProtocol?
     var userFromDelegate : User?
     
-//    Perform redirection to Change Password Page.
+    // Perform redirection to Change Password Page.
     func performTransitionToChangePasswordPage() {
         platformSelectionDelegate?.transitionToChangePasswordPage()
     }
