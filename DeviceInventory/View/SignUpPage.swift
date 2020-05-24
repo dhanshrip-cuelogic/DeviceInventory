@@ -10,33 +10,45 @@ import UIKit
 import Firebase
 import FirebaseFirestore
 
-class SignUpPage: UIViewController, SignUpProtocol {
+class SignUpPage: CustomNavigationController, SignUpProtocol {
     
-    var storyboardFromSignUpPage: UIStoryboard?
-    var viewFromSignUpPage: UIView?
     var errorTextFieldOfSignUpPage: UILabel?
     let signUpPresenter = SignUpPresenter()
 
     @IBOutlet weak var signUpEmailTextField: UITextField!
     @IBOutlet weak var signUpCueIdTextField: UITextField!
+    @IBOutlet weak var signUpUsernameTextField: UITextField!
     @IBOutlet weak var signUpPasswordTextField: UITextField!
     @IBOutlet weak var errorTextField: UILabel!
     @IBOutlet weak var signUpButton: UIButton!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var circularImage: UIImageView!
     
     override func viewDidLoad() {
        super.viewDidLoad()
-        signUpPresenter.databaseReference()
-       // To set this SignUp page as delegate to its Presenter and set storyboard and view for transition purpose.
-       errorTextField.alpha = 0
-       signUpButton.layer.cornerRadius = 20.0
        signUpPresenter.signUpDelegate = self as SignUpProtocol
-       storyboardFromSignUpPage = storyboard
-       viewFromSignUpPage = view
+       prepareForLoading()
+    }
+    
+    func prepareForLoading() {
+        // To add bottom layer for textfields and set borders for buttons.
+        self.navigationItem.hidesBackButton = true
+        navigationItem.title = "SignUp"
+        errorTextField.alpha = 0
+        signUpButton.layer.cornerRadius = 20.0
+        circularImage.layer.masksToBounds = true
+        circularImage.layer.cornerRadius = circularImage.bounds.width / 2
+        signUpButton.layer.cornerRadius = 5.0
+        loginButton.layer.cornerRadius = 5.0
+        signUpEmailTextField.addBottomBorder()
+        signUpCueIdTextField.addBottomBorder()
+        signUpUsernameTextField.addBottomBorder()
+        signUpPasswordTextField.addBottomBorder()
     }
     
     // For redirection to Login Page on successfull signUp of new user.
     @IBAction func redirectToLoginButtonClicked(_ sender: UIButton) {
-        signUpPresenter.performTransition()
+        redirect()
     }
 
     // When signUp button is clicked it will send the data from textfields to the presenter for validation and creation of new user.
@@ -44,7 +56,14 @@ class SignUpPage: UIViewController, SignUpProtocol {
         signUpPresenter.signUpEmailFromSignUpPage = signUpEmailTextField.text!
         signUpPresenter.signUpPasswordFromSignUpPage = signUpPasswordTextField.text!
         signUpPresenter.signUpCueIDFromSignUpPage = signUpCueIdTextField.text!
+        signUpPresenter.signUpUsernameFromSignUpPage = signUpUsernameTextField.text!
         errorTextFieldOfSignUpPage = errorTextField
         signUpPresenter.whenSignUpButtonClicked()
-    }    
+    }
+    
+    func redirect() {
+        let loginpage = self.storyboard!.instantiateViewController(withIdentifier: "Loginpage") as! LoginPage
+        self.navigationController?.pushViewController(loginpage, animated: false)
+    }
+    
 }

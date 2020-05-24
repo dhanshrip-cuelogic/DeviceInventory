@@ -9,28 +9,55 @@
 import UIKit
 import Firebase
 
-class LoginPage: UIViewController , LoginPageProtocol {
+extension UITextField {
+    func addBottomBorder(){
+        let bottomLine = CALayer()
+        bottomLine.frame = CGRect(x: 0, y: self.frame.size.height - 1, width: self.frame.size.width, height: 1)
+        bottomLine.backgroundColor = UIColor.black.cgColor
+        borderStyle = .none
+        layer.addSublayer(bottomLine)
+    }
+}
+
+class LoginPage: CustomNavigationController, LoginPageProtocol {
     
     var errorTextFieldOfLoginPage : UILabel?
     var user : User?
     let loginPresenter = LoginPresenter()
     
+    @IBOutlet weak var circularImage: UIImageView!
+    @IBOutlet weak var StackView: UIStackView!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var errorTextField: UILabel!
     @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var signUpPage: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // To set radius to the borders of button and Set this login page as delegate of its presenter.
-        errorTextField.alpha = 0
-        loginButton.layer.cornerRadius = 20.0
-        loginPresenter.loginDelegate = self
         
+        loginPresenter.loginDelegate = self
+        prepareForLoading()
+    }
+    
+    func prepareForLoading() {
+        self.navigationItem.hidesBackButton = true
+        navigationItem.title = "Login"
+        navigationItem.leftBarButtonItem = backToHomeScreen()
+        
+        // To set radius to the borders of button and Set this login page as delegate of its presenter.
+        emailTextField.addBottomBorder()
+        passwordTextField.addBottomBorder()
+        circularImage.layer.masksToBounds = true
+        circularImage.layer.cornerRadius = circularImage.bounds.width / 2
+        errorTextField.alpha = 0
+        loginButton.layer.cornerRadius = 5.0
+        signUpPage.layer.cornerRadius = 5.0
     }
     
     @IBAction func redirectToSignUpButtonClicked(_ sender: UIButton) {
-        // loginPresenter.transitionToSignUp()
+        let signupPage = self.storyboard!.instantiateViewController(withIdentifier: "SignUpPage") as! SignUpPage
+        self.navigationController?.pushViewController(signupPage, animated: false)
     }
     
     // When login button is clicked it will call the function from presenter for functionality.
@@ -43,14 +70,9 @@ class LoginPage: UIViewController , LoginPageProtocol {
     
     // Function to perform redirection on successfull SignIn from Login Page to Platform Selection page.
     func transtionToPlatformSelection() {
-        performSegue(withIdentifier: "redirectToPlatformSelectionPage", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "redirectToPlatformSelectionPage" {
-            let platformSelectionPage = segue.destination as! PlatformSelectionPage
-            platformSelectionPage.user = user
-        }
+        let platformSelection = self.storyboard!.instantiateViewController(withIdentifier: "PlatformSelectionPage") as! PlatformSelectionPage
+        platformSelection.user = user
+        self.navigationController?.pushViewController(platformSelection, animated: false)
     }
 }
 

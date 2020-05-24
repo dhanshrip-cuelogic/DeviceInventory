@@ -10,33 +10,37 @@ import Foundation
 
 protocol DeviceHistoryProtocol {
     var resultData : [IssuedDevices] {get set }
-    var deviceID : String? {get set }
+    var issuedDevices : [IssuedDevices] {get set}
+    var lastKey : String {get set}
+    func reloadTable()
 }
 
 class DeviceHistoryPresenter {
     
     var deviceHistoryDelegate : DeviceHistoryProtocol?
-    var issuedData : [IssuedDevices] = []
+    var sortedData : [IssuedDevices] = []
     
-    // Creating database reference and fetching data of IssuedDeviceTable.
-    func databaseReference() {
-        DatabaseManager.dbManager.createReference()
-        DatabaseManager.dbManager.takeSnapshotOfIssuedDeviceTable()
-    }
-    
-    func sortByDeviceID() -> [IssuedDevices]{
-        if issuedData.count != 0 {
-            issuedData.removeAll()
-        }
-        issuedData = DatabaseManager.dbManager.issuedDeviceData!
-        if deviceHistoryDelegate?.resultData.count != 0 {
-            deviceHistoryDelegate?.resultData.removeAll()
-        }
-        for device in issuedData {
-            if device.DeviceID == deviceHistoryDelegate!.deviceID! {
-                deviceHistoryDelegate?.resultData.append(device)
+    func sortByDeviceID(id : String, fromDate : TimeInterval, toDate : TimeInterval, fetch : Bool){
+        DatabaseManager.shared.takeSnapshotForDeviceHistory(of: id, fromDate : fromDate, toDate: toDate, fetchingAgain: fetch, completionHandler: { (issuedData) in
+            
+            //            let from = Date(timeIntervalSince1970: fromDate) as NSDate
+            //            let to = Date(timeIntervalSince1970: toDate) as NSDate
+            //            var myarray : [IssuedDevices] = []
+            //            for device in issuedData! {
+            //                myarray.append(device)
+            //            }
+            //            let fromPredicate = NSPredicate(format: "self.Date >= %@", fromDate)
+            //            let toPredicate = NSPredicate(format: "self.Date < %@", toDate)
+            //            let predicateRule = NSCompoundPredicate(andPredicateWithSubpredicates: [fromPredicate , toPredicate])
+            //            let filteredData = myarray.filter { predicateRule.evaluate(with: $0) }
+            //
+            //            self.sortedData = (filteredData as NSArray).sortedArray(using: [NSSortDescriptor(key: "Date", ascending: true)]) as! [IssuedDevices]
+            
+            for device in issuedData! {
+                self.deviceHistoryDelegate?.issuedDevices.append(device)
             }
-        }
-        return deviceHistoryDelegate!.resultData
+            self.deviceHistoryDelegate?.reloadTable()
+        })
     }
+    
 }

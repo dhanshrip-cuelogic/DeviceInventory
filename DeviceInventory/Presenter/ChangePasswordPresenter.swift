@@ -11,8 +11,6 @@ import Firebase
 
 protocol ChangePasswordProtocol {
     var errorTextFieldFromChangePasswordPage : UILabel? {get set}
-    var storyBoardFromChangePasswordPage : UIStoryboard? {get set}
-    var viewFromChangePasswordPage : UIView? {get set}
     func showAlert()
 }
 
@@ -30,39 +28,32 @@ class ChangePasswordPresenter {
             showError(error!)
         }else {
             // Take cleaned data from text fields
-            let newPassword = newPasswordFromChangePasswordPage?.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard let newPassword = newPasswordFromChangePasswordPage?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
             
             // Update password with new password and redirect to Platform Selection Page.
-            Auth.auth().currentUser?.updatePassword(to: newPassword!, completion: { (error) in
+            Auth.auth().currentUser?.updatePassword(to: newPassword, completion: { (error) in
                 if error != nil {
                     self.showError("Error in changing password.")
                 }
                 else {
                     self.changePasswordDelegate?.showAlert()
-                    self.redirectToPlatformSelectionPage()
                 }
             })
         }
     }
     
-    // Redirect to platform selection page using storyboardID.
-    func redirectToPlatformSelectionPage() {
-        let platformSelectionPage = changePasswordDelegate?.storyBoardFromChangePasswordPage?.instantiateViewController(identifier: "PlatformSelectionPage")
-        changePasswordDelegate?.viewFromChangePasswordPage?.window?.rootViewController = platformSelectionPage
-    }
-    
     // Validate new password with regular expression.
     func validateNewPassword() -> Bool? {
+        guard let password = newPasswordFromChangePasswordPage else { return false }
         let passwordRegEx = "^([A-Z]+)([a-z]?.*)([!@#$%^&*.].*)([0-9].*)$"
         let passwordTest = NSPredicate(format:"SELF MATCHES %@", passwordRegEx)
-        let newPasswordResult = passwordTest.evaluate(with: newPasswordFromChangePasswordPage!)
+        let newPasswordResult = passwordTest.evaluate(with: password)
         return newPasswordResult
     }
     
     // Validate whether the field is empty or not.
     func validateFields() -> String? {
         let newPasswordValidate = validateNewPassword()
-     
         if newPasswordFromChangePasswordPage?.trimmingCharacters(in: .whitespacesAndNewlines) == "" {
             return "Please enter password."
         }
@@ -74,8 +65,8 @@ class ChangePasswordPresenter {
     
     // Display error on screen.
     func showError(_ message : String) {
-         changePasswordDelegate?.errorTextFieldFromChangePasswordPage!.text = message
-         changePasswordDelegate?.errorTextFieldFromChangePasswordPage!.alpha = 1
-     }
+        changePasswordDelegate?.errorTextFieldFromChangePasswordPage!.text = message
+        changePasswordDelegate?.errorTextFieldFromChangePasswordPage!.alpha = 1
+    }
 }
 

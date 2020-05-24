@@ -7,54 +7,97 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 protocol DisplayDeviceProtocol {
     func showAlert()
     func showAlertAfterCheckout()
-    func showErrorAlert()
+    func showErrorAlert(title : String, message : String)
+    var issuedUserCueID : String? {get set}
+    var currentUserCueID : String? {get set}
+    var currentUserName : String? {get set}
 }
 
 class DisplayDevicePresenter {
     
     var displayDelegate : DisplayDeviceProtocol?
-    var checkedInDetails : [IssuedDevices]?
-    var checkedinDeviceDetails : IssuedDevices?
+    var currentDeviceID : String?
+    var childid : String = ""
     
-    func databaseReference() {
-        DatabaseManager.dbManager.createReference()
-        DatabaseManager.dbManager.takeSnapshotOfIssuedDeviceTable()
-    }
-    
-    func whenCheckinButtonIsClicked(cueID : String, deviceID : String, date : String, checkin : String) {
+    func whenCheckinButtonIsClicked(childID : String, cueID : String,name : String, deviceID : String, date : Date, checkin : String) {
         // This will call a method from DatabaseManager to save the checkin time with deviceID for logged in user.
-        DatabaseManager.dbManager.addNewCheckIn(cueID: cueID, deviceID: deviceID, date: date, checkin: checkin)
-        if DatabaseManager.dbManager.successful == true {
+        DatabaseManager.shared.addNewCheckIn(childID : childID, cueID: cueID, name : name, deviceID: deviceID, date: date, checkin: checkin)
+        if DatabaseManager.shared.successful == true {
             // Change the status of that device in DeviceTable as well.
-            DatabaseManager.dbManager.updateDeviceStatusAfterCheckin(of: deviceID)
-            displayDelegate!.showAlert()
+            DatabaseManager.shared.updateDeviceStatusAfterCheckin(of: deviceID)
+            displayDelegate?.showAlert()
         }else {
-            displayDelegate!.showErrorAlert()
+            DatabaseManager.shared.deleteFromIssuedTable(with: childID)
+            displayDelegate?.showErrorAlert(title: "Failed", message: "Failed to Checkin Device.")
         }
     }
     
     func whenCheckoutButtonIsClicked(deviceID : String, checkout : String) {
-        // This will call a methos from DatabaseManager to save checkout time of that device.
-        checkedInDetails = DatabaseManager.dbManager.issuedDeviceData!
-
-        for device in checkedInDetails! {
-            if device.DeviceID == deviceID {
-                checkedinDeviceDetails = device
+        // This will call a method from DatabaseManager to save checkout time of that device.
+        DatabaseManager.shared.takeSnapshotOfIssuedDeviceTable { (checkedInDetails) in
+            var checkedinDeviceDetails : IssuedDevices?
+            var keyIndex = 0
+            
+            for device in checkedInDetails! {
+                if device.DeviceID == deviceID {
+                    if device.Checkout == "-- : --" {
+                        checkedinDeviceDetails = device
+                        self.childid = DatabaseManager.shared.keys[keyIndex]
+                    }
+                }
+                keyIndex += 1
             }
-        }
-        DatabaseManager.dbManager.addCheckOut(cueID: checkedinDeviceDetails!.CueID, deviceID: deviceID, date: checkedinDeviceDetails!.Date, checkin: checkedinDeviceDetails!.Checkin, checkout: checkout)
-        
-        if DatabaseManager.dbManager.successful == true {
-            // Change the status of that device in DeviceTable as well.
-            DatabaseManager.dbManager.updateDeviceStatusAfterCheckout(of: deviceID)
-            displayDelegate!.showAlertAfterCheckout()
-        }else {
-            displayDelegate!.showErrorAlert()
+            guard let device = checkedinDeviceDetails else { return }
+            //            let childid = self.getChildID(date: device.Date)
+            
+            DatabaseManager.shared.addCheckOut(childID: self.childid, cueID: device.CueID, name: device.Name, deviceID: deviceID, date: device.Date, checkin: device.Checkin, checkout: checkout)
+            
+            if DatabaseManager.shared.successful == true {
+                // Change the status of that device in DeviceTable as well.
+                DatabaseManager.shared.updateDeviceStatusAfterCheckout(of: deviceID)
+                self.displayDelegate?.showAlertAfterCheckout()
+            }else {
+                self.displayDelegate?.showErrorAlert(title: "Failed", message: "Failed to Checkout Device.")
+            }
         }
     }
     
+    func getCueID() {
+        // This will call a method from DatabaseManager to save checkout time of that device.
+        let user = Auth.auth().currentUser
+        DatabaseManager.shared.takeSnapshotOfEmployeeDetails { (employeeDetails) in
+            for employee in employeeDetails! {
+                if employee.Email == user?.email {
+                    self.displayDelegate?.currentUserCueID = employee.CueID
+                    self.displayDelegate?.currentUserName = employee.Username
+                }
+            }
+        }
+        DatabaseManager.shared.takeSnapshotOfIssuedDeviceTable { (issuedDevices) in
+            for device in issuedDevices! {
+                if device.DeviceID == self.currentDeviceID {
+                    self.displayDelegate?.issuedUserCueID = device.CueID
+                }
+            }
+        }
+    }
+    
+    // function to get date component from calender.
+    func getDateAndTime() -> (date : Date, time : String, childID : String){
+        let presentDate = Date()
+        let calender = Calendar.current
+        let component = calender.dateComponents([.year, .month, .day, .hour, .minute], from: presentDate)
+        let childID = "\(component.day!)\(component.month!)\(component.year!)\(component.hour!)\(component.minute!)"
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone.current
+        dateFormatter.dateFormat = "hh:mm"
+        let convertedTime = dateFormatter.string(from: presentDate)
+        
+        return (presentDate, convertedTime, childID)
+    }
 }

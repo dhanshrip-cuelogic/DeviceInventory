@@ -8,53 +8,41 @@
 
 import Foundation
 import FirebaseDatabase
+import Firebase
 
 protocol DeviceListForEmployeeProtocol {
-    var resultData : [DeviceDetails] { get set }
     var platform : Platform? {get set}
-    func setDevicesBasedOnStatus()
+    var availableDevices : [DeviceDetails] {get set}
+    var issuedDevices : [DeviceDetails] {get set}
+    var devicesToDisplay : [[DeviceDetails]] {get set}
+    func reloadTable()
     func transitionToDisplayDevice(at index : IndexPath)
 }
 
 class DeviceListForEmployeePresenter {
     
     var deviceListDelegate : DeviceListForEmployeeProtocol?
-    var fetchedData = [DeviceDetails]()
-   
-    // Here we are creating reference of the database to fetch data from the table.
-    func databaseReference() {
-        DatabaseManager.dbManager.createReference()
-        DatabaseManager.dbManager.takeSnapshotOfDeviceTable()
-    }
+    var currentDeviceID : String?
     
     // Here we are passing this function to DeviceListForEmployee page to perform sorting based on status.
     func devicesBasedOnStatus() {
-        deviceListDelegate?.setDevicesBasedOnStatus()
-    }
-    
-    // Here we are filtering and storing data according to the selected platform to work with it.
-    func SortByPlatform() -> [DeviceDetails]{
-        if fetchedData.count != 0 {
-            fetchedData.removeAll()
+        DatabaseManager.shared.takeSnapshotOfDeviceTable { (sortedList) in
+            var availableList : [DeviceDetails]  = []
+            var issuedList : [DeviceDetails] = []
+            for device in sortedList! {
+                if device.Platform == self.deviceListDelegate?.platform!.rawValue {
+                    if device.Status == "Available" {
+                        availableList.append(device)
+                    }else {
+                        issuedList.append(device)
+                    }
+                }
+            }
+            self.deviceListDelegate?.availableDevices = availableList
+            self.deviceListDelegate?.issuedDevices = issuedList
+            
+            self.deviceListDelegate?.reloadTable()
         }
-       fetchedData = DatabaseManager.dbManager.fetchedData!
-        
-       if deviceListDelegate?.resultData.count != 0 {
-            deviceListDelegate?.resultData.removeAll()
-        }
-       for device in fetchedData {
-           if device.Platform == deviceListDelegate!.platform!.rawValue {
-               deviceListDelegate?.resultData.append(device)
-           }
-       }
-       return deviceListDelegate!.resultData
     }
-    
-    // It will take the indexpath of the selected row and it will show the details on device details page.
-    func displaySelectedDevice(at index: IndexPath) {
-        // Here we will take all the details of selected indexpath and pass those details to the DisplayDevicePage.
-        deviceListDelegate?.transitionToDisplayDevice(at : index)
-        
-    }
-    
+   
 }

@@ -10,8 +10,9 @@ import Foundation
 
 struct IssuedDevices : Codable {
     var CueID : String
+    var Name : String
     var DeviceID : String
-    var Date : String
+    var Date : TimeInterval
     var Checkin : String
     var Checkout : String
     var Status : String

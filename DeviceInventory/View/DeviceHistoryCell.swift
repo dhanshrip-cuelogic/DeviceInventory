@@ -11,6 +11,7 @@ import UIKit
 class DeviceHistoryCell: UITableViewCell {
     
     @IBOutlet weak var CueIDLabel: UILabel!
+    @IBOutlet weak var NameLabel: UILabel!
     @IBOutlet weak var DateLabel: UILabel!
     @IBOutlet weak var CheckinLabel: UILabel!
     @IBOutlet weak var CheckoutLabel: UILabel!

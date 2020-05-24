@@ -21,6 +21,10 @@
 		9925658F24632CC400F7EA20 /* DeviceHistoryPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9925658E24632CC400F7EA20 /* DeviceHistoryPresenter.swift */; };
 		99461A4A245A03C500E32B14 /* PlatformSelectionPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99461A49245A03C500E32B14 /* PlatformSelectionPage.swift */; };
 		99461A4C245A06B100E32B14 /* PlatformSelectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99461A4B245A06B100E32B14 /* PlatformSelectionPresenter.swift */; };
+		9949A3CE247153D50050C51F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949A3CD247153D50050C51F /* Reachability.swift */; };
+		995C189A2469EBC300FA99D6 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995C18992469EBC300FA99D6 /* CustomNavigationController.swift */; };
+		9960064824799A2600B89B51 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9960064624799A2500B89B51 /* OpenSans-Semibold.ttf */; };
+		9960064924799A2600B89B51 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9960064724799A2600B89B51 /* OpenSans-Regular.ttf */; };
 		9961DAA42456D08E00723633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DAA32456D08E00723633 /* AppDelegate.swift */; };
 		9961DAA62456D08E00723633 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DAA52456D08E00723633 /* SceneDelegate.swift */; };
 		9961DAA82456D08E00723633 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DAA72456D08E00723633 /* ViewController.swift */; };
@@ -36,6 +40,7 @@
 		9966B74B2460236800D96B95 /* Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9966B74A2460236800D96B95 /* Platform.swift */; };
 		9966B74D246090C600D96B95 /* DeviceDetailsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9966B74C246090C600D96B95 /* DeviceDetailsPage.swift */; };
 		9966B74F24609A8A00D96B95 /* DeviceDetailsPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9966B74E24609A8A00D96B95 /* DeviceDetailsPresenter.swift */; };
+		9982B4A42466B02A007B9561 /* Employee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9982B4A32466B02A007B9561 /* Employee.swift */; };
 		998A6F8D2459977900624C3D /* ChangePassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A6F8C2459977900624C3D /* ChangePassword.swift */; };
 		998A6F8F24599CF500624C3D /* ChangePasswordPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 998A6F8E24599CF500624C3D /* ChangePasswordPresenter.swift */; };
 		999C781124571438005DA8DB /* HomeScreenPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999C781024571438005DA8DB /* HomeScreenPresenter.swift */; };
@@ -64,6 +69,10 @@
 		9925658E24632CC400F7EA20 /* DeviceHistoryPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceHistoryPresenter.swift; sourceTree = "<group>"; };
 		99461A49245A03C500E32B14 /* PlatformSelectionPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformSelectionPage.swift; sourceTree = "<group>"; };
 		99461A4B245A06B100E32B14 /* PlatformSelectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformSelectionPresenter.swift; sourceTree = "<group>"; };
+		9949A3CD247153D50050C51F /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
+		995C18992469EBC300FA99D6 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		9960064624799A2500B89B51 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
+		9960064724799A2600B89B51 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		9961DAA02456D08E00723633 /* DeviceInventory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeviceInventory.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9961DAA32456D08E00723633 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9961DAA52456D08E00723633 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -81,6 +90,7 @@
 		9966B74A2460236800D96B95 /* Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Platform.swift; sourceTree = "<group>"; };
 		9966B74C246090C600D96B95 /* DeviceDetailsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsPage.swift; sourceTree = "<group>"; };
 		9966B74E24609A8A00D96B95 /* DeviceDetailsPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceDetailsPresenter.swift; sourceTree = "<group>"; };
+		9982B4A32466B02A007B9561 /* Employee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Employee.swift; sourceTree = "<group>"; };
 		998A6F8C2459977900624C3D /* ChangePassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePassword.swift; sourceTree = "<group>"; };
 		998A6F8E24599CF500624C3D /* ChangePasswordPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordPresenter.swift; sourceTree = "<group>"; };
 		999C781024571438005DA8DB /* HomeScreenPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreenPresenter.swift; sourceTree = "<group>"; };
@@ -116,8 +126,19 @@
 			isa = PBXGroup;
 			children = (
 				990C965E245DE66C006D6B74 /* DatabaseManager.swift */,
+				9949A3CD247153D50050C51F /* Reachability.swift */,
 			);
 			path = "File Manager";
+			sourceTree = "<group>";
+		};
+		9960064524799A0B00B89B51 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				9960064724799A2600B89B51 /* OpenSans-Regular.ttf */,
+				9960064624799A2500B89B51 /* OpenSans-Semibold.ttf */,
+			);
+			name = fonts;
+			path = ../fonts;
 			sourceTree = "<group>";
 		};
 		9961DA972456D08E00723633 = {
@@ -147,6 +168,7 @@
 				999C781424571CF3005DA8DB /* Model */,
 				999C780F245713FD005DA8DB /* Presenter */,
 				999C780E2457130F005DA8DB /* View */,
+				9960064524799A0B00B89B51 /* fonts */,
 				9961DAA92456D08E00723633 /* Main.storyboard */,
 				9961DAAC2456D09500723633 /* Assets.xcassets */,
 				9961DAAE2456D09500723633 /* LaunchScreen.storyboard */,
@@ -160,6 +182,7 @@
 		999C780E2457130F005DA8DB /* View */ = {
 			isa = PBXGroup;
 			children = (
+				995C18992469EBC300FA99D6 /* CustomNavigationController.swift */,
 				9961DAB72456DA7B00723633 /* HomeScreen.swift */,
 				9961DAB92456E6A100723633 /* LoginPage.swift */,
 				99D041132458302900CC0AD0 /* SignUpPage.swift */,
@@ -203,6 +226,7 @@
 				990C9662245DEA3F006D6B74 /* Status.swift */,
 				9966B74A2460236800D96B95 /* Platform.swift */,
 				9925658C24632B0600F7EA20 /* IssuedDevices.swift */,
+				9982B4A32466B02A007B9561 /* Employee.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -281,6 +305,8 @@
 				992565892463103700F7EA20 /* DeviceHistoryCell.xib in Resources */,
 				990C965C245DA59A006D6B74 /* GoogleService-Info.plist in Resources */,
 				9961DAAD2456D09500723633 /* Assets.xcassets in Resources */,
+				9960064824799A2600B89B51 /* OpenSans-Semibold.ttf in Resources */,
+				9960064924799A2600B89B51 /* OpenSans-Regular.ttf in Resources */,
 				9961DAAB2456D08E00723633 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -334,15 +360,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				995C189A2469EBC300FA99D6 /* CustomNavigationController.swift in Sources */,
 				9925658F24632CC400F7EA20 /* DeviceHistoryPresenter.swift in Sources */,
 				9961DAB82456DA7B00723633 /* HomeScreen.swift in Sources */,
 				999C781124571438005DA8DB /* HomeScreenPresenter.swift in Sources */,
 				9925657F2462E6BF00F7EA20 /* DisplayDetailsPage.swift in Sources */,
 				9966B749246008AB00D96B95 /* DeviceListForAdminPresenter.swift in Sources */,
+				9949A3CE247153D50050C51F /* Reachability.swift in Sources */,
 				992565882463103700F7EA20 /* DeviceHistoryCell.swift in Sources */,
 				9961DAA82456D08E00723633 /* ViewController.swift in Sources */,
 				99D041142458302900CC0AD0 /* SignUpPage.swift in Sources */,
 				990C965F245DE66C006D6B74 /* DatabaseManager.swift in Sources */,
+				9982B4A42466B02A007B9561 /* Employee.swift in Sources */,
 				9966B74B2460236800D96B95 /* Platform.swift in Sources */,
 				9961DAA42456D08E00723633 /* AppDelegate.swift in Sources */,
 				9925658D24632B0600F7EA20 /* IssuedDevices.swift in Sources */,
@@ -511,6 +540,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = DeviceInventory/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -529,6 +559,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = DeviceInventory/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

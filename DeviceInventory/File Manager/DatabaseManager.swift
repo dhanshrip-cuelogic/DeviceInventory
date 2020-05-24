@@ -8,43 +8,24 @@
 
 import FirebaseDatabase
 import CodableFirebase
+import FirebaseFirestore
 
 class DatabaseManager {
 
-    static let dbManager = DatabaseManager()
+    static let shared = DatabaseManager()
     var ref : DatabaseReference!
     let encoder = JSONEncoder()
     let decoder = JSONDecoder()
-    var deviceData = [DeviceDetails]()
-    var issuedData = [IssuedDevices]()
     var successful : Bool?
-//    var checkinDetails = [IssuedDevices]()
-    
-    private (set) var fetchedData : [DeviceDetails]? {
-        didSet {
-             NotificationCenter.default.post(name: Notification.Name(rawValue: "loadedPost"), object: nil)
-        }
-    }
-    private (set) var issuedDeviceData : [IssuedDevices]? {
-        didSet {
-             NotificationCenter.default.post(name: Notification.Name(rawValue: "gotIssuedData"), object: nil)
-        }
-    }
-
+    var keys : [String] = []
     
     private init() {
-           //
+           ref = Database.database().reference()
        }
-    
-     func createReference(){
-        ref = Database.database().reference()
-     }
     
      func decodingDeviceDetails(jsondata : Data?) -> [DeviceDetails]{
         let data = try! decoder.decode([String : DeviceDetails].self, from: jsondata!)
-        if deviceData.count != 0 {
-            deviceData.removeAll()
-        }
+        var deviceData : [DeviceDetails] = []
         for device in data{
             deviceData.append(device.value)
         }
@@ -53,41 +34,123 @@ class DatabaseManager {
     
     func decodingIssuedDeviceData(jsondata : Data?) -> [IssuedDevices]{
        let data = try! decoder.decode([String : IssuedDevices].self, from: jsondata!)
-        if issuedData.count != 0 {
-            issuedData.removeAll()
+       var issuedData = [IssuedDevices]()
+        if keys.count != 0 {
+            keys.removeAll()
         }
-       for device in data{
-           issuedData.append(device.value)
+       for device in data {
+            issuedData.append(device.value)
+            keys.append(device.key)
        }
        return issuedData
     }
 
     
-    func takeSnapshotOfDeviceTable() {
+    func decodingEmployeeData(jsondata : Data?) -> [Employee] {
+        let data = try! decoder.decode([String : Employee].self, from: jsondata!)
+        var employeeData : [Employee] = []
+        for device in data{
+            employeeData.append(device.value)
+        }
+        return employeeData
+    }
+
+    
+    func takeSnapshotOfDeviceTable(completionHandler : @escaping ([DeviceDetails]?) -> ()) {
         ref.child("DeviceTable").observeSingleEvent(of: .value, with: { snapshot in
+            var fetchedData : [DeviceDetails] = []
             guard let value = snapshot.value else { return }
-            let model = try? JSONSerialization.data(withJSONObject: value)
+            guard let model = try? JSONSerialization.data(withJSONObject: value) else { return }
             
-            guard let data = Data(base64Encoded: model!.base64EncodedData()) else { return }
-            if self.fetchedData != nil {
-                self.fetchedData?.removeAll()
+            guard let data = Data(base64Encoded: model.base64EncodedData()) else { return }
+            fetchedData = self.decodingDeviceDetails(jsondata: data)
+            if fetchedData.isEmpty {
+                completionHandler(nil)
+            } else {
+                completionHandler(fetchedData)
             }
-            self.fetchedData = self.decodingDeviceDetails(jsondata: data)
         })
     }
     
-    func takeSnapshotOfIssuedDeviceTable() {
+    func takeSnapshotOfIssuedDeviceTable(completionHandler : @escaping ([IssuedDevices]?) -> ()) {
         ref.child("IssuedDeviceTable").observeSingleEvent(of: .value, with: { snapshot in
+            var issuedDeviceData : [IssuedDevices] = []
             guard let value = snapshot.value else { return }
-            let model = try? JSONSerialization.data(withJSONObject: value)
+            guard let model = try? JSONSerialization.data(withJSONObject: value) else { return }
             
-            guard let data = Data(base64Encoded: model!.base64EncodedData()) else { return }
-            if self.issuedDeviceData != nil {
-                self.issuedDeviceData?.removeAll()
+            guard let data = Data(base64Encoded: model.base64EncodedData()) else { return }
+            issuedDeviceData = self.decodingIssuedDeviceData(jsondata: data)
+            if issuedDeviceData.isEmpty {
+                completionHandler(nil)
+            } else {
+                completionHandler(issuedDeviceData)
             }
-            self.issuedDeviceData = self.decodingIssuedDeviceData(jsondata: data)
         })
     }
+    
+    func takeSnapshotOfEmployeeDetails(completionHandler : @escaping ([Employee]?) -> ()) {
+        ref.child("EmployeeTable").observeSingleEvent(of: .value, with: { (snapshot) in
+            var employeeDetails : [Employee] = []
+            guard let value = snapshot.value else { return }
+            guard let model = try? JSONSerialization.data(withJSONObject: value) else { return }
+           
+            guard let data = Data(base64Encoded: model.base64EncodedData()) else { return }
+            employeeDetails = self.decodingEmployeeData(jsondata: data)
+            if employeeDetails.isEmpty {
+                completionHandler(nil)
+            } else {
+                completionHandler(employeeDetails)
+            }
+        })
+    }
+    
+    func takeSnapshotForDeviceHistory(of deviceId : String,fromDate: TimeInterval, toDate: TimeInterval, fetchingAgain : Bool, completionHandler : @escaping ([IssuedDevices]?) -> ()) {
+        if fetchingAgain == false {
+             ref.child("IssuedDeviceTable")
+                .queryOrdered(byChild: "DeviceID")
+                .queryEqual(toValue: deviceId)
+                .queryLimited(toFirst: 10)
+                .observeSingleEvent(of: .value, with: { snapshot in
+                
+                    var issuedDeviceData : [IssuedDevices] = []
+
+                    guard let value = snapshot.value else { return }
+                    guard let model = try? JSONSerialization.data(withJSONObject: value) else { return }
+                    guard let data = Data(base64Encoded: model.base64EncodedData()) else { return }
+
+                    issuedDeviceData = self.decodingIssuedDeviceData(jsondata: data)
+                    if issuedDeviceData.isEmpty {
+                        completionHandler(nil)
+                    } else {
+                        completionHandler(issuedDeviceData)
+                    }
+                })
+        }
+        else if fetchingAgain == true {
+            guard let lastKey = keys.last else { return }
+       
+            ref.child("IssuedDeviceTable")
+                .queryOrdered(byChild:"DeviceID")
+                .queryStarting(atValue: deviceId, childKey: lastKey)
+                .queryEnding(atValue: deviceId)
+                .queryLimited(toFirst: 10)
+                .observeSingleEvent(of: .value, with: { snapshot in
+                    
+                    var issuedDeviceData : [IssuedDevices] = []
+
+                    guard let value = snapshot.value else { return }
+                    guard let model = try? JSONSerialization.data(withJSONObject: value) else { return }
+                    guard let data = Data(base64Encoded: model.base64EncodedData()) else { return }
+                    issuedDeviceData = self.decodingIssuedDeviceData(jsondata: data)
+                    if issuedDeviceData.isEmpty {
+                        completionHandler(nil)
+                    } else {
+                        completionHandler(issuedDeviceData)
+                    }
+                })
+        }
+    }
+    
     
     func addNewDevice(deviceID : String, modelName : String, platform : String, osVersion : String) {
         ref.child("DeviceTable").child(deviceID).setValue(["DeviceID" : deviceID,"ModelName" : modelName,"Platform" : platform,"OSVersion" : osVersion, "Status" : "Available"]) {
@@ -122,8 +185,27 @@ class DatabaseManager {
         }
     }
     
-    func addNewCheckIn(cueID : String, deviceID : String, date : String, checkin : String) {
-        ref.child("IssuedDeviceTable").child(deviceID).setValue(["CueID" : cueID, "DeviceID" : deviceID, "Date" : date, "Checkin" : checkin, "Checkout" : "-- : --", "Status" : "Issued"]) {
+    func deleteFromIssuedTable(with childId : String) {
+        let removingID = ref.child("IssuedDeviceTable").child(childId)
+        removingID.removeValue()
+    }
+    
+    
+    func addNewCheckIn(childID : String,cueID : String,name : String, deviceID : String, date : Date, checkin : String) {
+        
+        let timestamp =  Date().timeIntervalSince1970
+        
+        ref.child("IssuedDeviceTable").child(childID).setValue(["CueID" : cueID,"Name" : name, "DeviceID" : deviceID, "Date" : timestamp, "Checkin" : checkin, "Checkout" : "-- : --", "Status" : "Issued"]) { (error:Error?,ref:DatabaseReference) in
+            if error != nil {
+                self.successful = false
+            } else {
+                self.successful = true
+            }
+        }
+    }
+    
+    func addCheckOut(childID : String, cueID : String, name : String, deviceID : String, date : TimeInterval, checkin : String, checkout : String) {
+        ref.child("IssuedDeviceTable").child(childID).setValue(["CueID" : cueID,"Name" : name, "DeviceID" : deviceID, "Date" : date, "Checkin" : checkin, "Checkout" : checkout, "Status" : "Available"]) {
             (error:Error?, ref:DatabaseReference) in
             if error != nil {
                 self.successful = false
@@ -133,19 +215,8 @@ class DatabaseManager {
         }
     }
     
-    func addCheckOut(cueID : String, deviceID : String, date : String, checkin : String, checkout : String) {
-        ref.child("IssuedDeviceTable").child(deviceID).setValue(["CueID" : cueID, "DeviceID" : deviceID, "Date" : date, "Checkin" : checkin, "Checkout" : checkout, "Status" : "Available"]) {
-            (error:Error?, ref:DatabaseReference) in
-            if error != nil {
-                self.successful = false
-            } else {
-                self.successful = true
-            }
-        }
-    }
-    
-    func createNewUser(cueID : String, email : String) {
-        ref.child("EmployeeTable").child(cueID).setValue(["CueID" : cueID, "Email" : email]) {
+    func createNewUser(cueID : String, email : String, username : String) {
+        ref.child("EmployeeTable").child(cueID).setValue(["CueID" : cueID, "Email" : email, "Username" : username]) {
             (error:Error?, ref:DatabaseReference) in
             if error != nil {
                 self.successful = false
@@ -162,18 +233,5 @@ class DatabaseManager {
     func updateDeviceStatusAfterCheckout(of deviceID: String) {
         ref.child("DeviceTable").child(deviceID).child("Status").setValue("Available")
     }
-//
-//    func fetchCheckInDetails(deviceid :  String) {
-//        ref.child("IssuedTable").child(deviceid).observeSingleEvent(of: .value) { snapshot in
-//            guard let value = snapshot.value else { return }
-//            let model = try? JSONSerialization.data(withJSONObject: value)
-//
-//            guard let data = Data(base64Encoded: model!.base64EncodedData()) else { return }
-//            if self.checkinDetails != nil {
-//                self.checkinDetails.removeAll()
-//            }
-//            self.checkinDetails = self.decodingIssuedDeviceData(jsondata: data)
-//        }
-//    }
     
 }

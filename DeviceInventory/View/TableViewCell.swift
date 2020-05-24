@@ -20,22 +20,23 @@ class TableViewCell: UITableViewCell {
     @IBOutlet weak var deleteButton: UIButton!
     var index : IndexPath?
     var cellDelegate : CellProtocol?
-
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
     }
     
     @IBAction func deleteButtonPressed(_ sender: UIButton) {
-        cellDelegate?.whenDeleteButtonPressed(at : index!)
+        guard let index = index else { return}
+        cellDelegate?.whenDeleteButtonPressed(at : index)
     }
     
     @IBAction func editButtonPressed(_ sender: UIButton) {
-        cellDelegate?.whenEditButtonPressed(at: index!)
+        guard let index = index else { return}
+        cellDelegate?.whenEditButtonPressed(at: index)
     }
     
     

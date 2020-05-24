@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import MessageUI
 
-class DisplayDetailsPage: UIViewController, DisplayDeviceProtocol {
+class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MFMailComposeViewControllerDelegate{
     
     
     @IBOutlet weak var deviceIDLabel: UILabel!
@@ -18,6 +19,8 @@ class DisplayDetailsPage: UIViewController, DisplayDeviceProtocol {
     @IBOutlet weak var issuedButtonLabel: UIButton!
     @IBOutlet weak var checkoutButtonLabel: UIButton!
     @IBOutlet weak var CheckinButtonLabel: UIButton!
+    @IBOutlet weak var historyButton: UIButton!
+    @IBOutlet weak var complaintButton: UIButton!
     
     let displayPresenter = DisplayDevicePresenter()
     var deviceID : String?
@@ -25,24 +28,42 @@ class DisplayDetailsPage: UIViewController, DisplayDeviceProtocol {
     var platform : String?
     var osVersion : String?
     var status : String?
-    var cueID = "Cue10018"
-
+    var issuedUserCueID : String?
+    var currentUserCueID : String?
+    var currentUserName : String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         displayPresenter.displayDelegate = self
-        displayPresenter.databaseReference()
+        prepareForLoading()
+    }
+    
+    func prepareForLoading() {
+        self.navigationItem.hidesBackButton = true
+        navigationItem.title = "Device Details"
+        navigationItem.leftBarButtonItem = backButton()
+        
+        CheckinButtonLabel.layer.cornerRadius = 5.0
+        checkoutButtonLabel.layer.cornerRadius = 5.0
+        issuedButtonLabel.layer.cornerRadius = 5.0
+        historyButton.layer.cornerRadius = 5.0
+        complaintButton.layer.cornerRadius = 5.0
+        
+        displayPresenter.currentDeviceID = deviceID
+        displayPresenter.getCueID()
         deviceIDLabel.text = deviceID
         modelNameLabel.text = modelName
         platformLabel.text = platform
         osVersionLabel.text = osVersion
+        
+        
         if status == "Available" {
             CheckinButtonLabel.isHidden = false
             checkoutButtonLabel.isHidden = true
             issuedButtonLabel.isHidden = true
         }
         if status == "Issued" {
-            if cueID == cueID {
+            if issuedUserCueID == currentUserCueID {
                 checkoutButtonLabel.isHidden = false
                 issuedButtonLabel.isHidden = true
                 CheckinButtonLabel.isHidden = true
@@ -52,49 +73,57 @@ class DisplayDetailsPage: UIViewController, DisplayDeviceProtocol {
                 CheckinButtonLabel.isHidden = true
             }
         }
-        
     }
 
     @IBAction func Checkin(_ sender: UIButton) {
         // It will call a method from presenter to perform action of this button i.e., to save time of check-in for this user.
-        let currentDate = getDateAndTime().date
-        let currentTime = getDateAndTime().time
-        displayPresenter.whenCheckinButtonIsClicked(cueID: cueID, deviceID: deviceID!, date: currentDate, checkin: currentTime)
+        let currentDateAndTime = displayPresenter.getDateAndTime()
+        let currentDate = currentDateAndTime.date
+        let currentTime = currentDateAndTime.time
+        let childID = currentDateAndTime.childID
+        
+        guard let id = currentUserCueID else { return }
+        guard let name = currentUserName else { return }
+        guard let deviceid = deviceID else { return }
+        displayPresenter.whenCheckinButtonIsClicked(childID : childID, cueID: id, name : name, deviceID: deviceid, date: currentDate, checkin: currentTime)
     }
     
     @IBAction func Checkout(_ sender: UIButton) {
         // It will call a method from presenter to perform action of this button i.e., to save time of check-in for this user.
-//        let currentDate = getDateAndTime().date
-        let currentTime = getDateAndTime().time
-        displayPresenter.whenCheckoutButtonIsClicked(deviceID: deviceID!, checkout: currentTime)
-        
+        let currentTime = displayPresenter.getDateAndTime().time
+        guard let deviceid = deviceID else { return }
+        displayPresenter.whenCheckoutButtonIsClicked(deviceID: deviceid, checkout: currentTime)
     }
     
     @IBAction func registerComplaint(_ sender: UIButton) {
+        let recipientEmail = "dhanshrip35@gmail.com"
+        let subject = "Complaint against device."
+        let body = "I have found this device damaged!!!"
+        
+        guard MFMailComposeViewController.canSendMail()
+            else {
+                showErrorAlert(title: "Failed", message: "Mail could not be sent.")
+                return
+            }
+        let mail = MFMailComposeViewController()
+        mail.mailComposeDelegate = self
+        mail.setToRecipients([recipientEmail])
+        mail.setSubject(subject)
+        mail.setMessageBody(body, isHTML: false)
+
+        present(mail, animated: true)
     }
     
     @IBAction func issuedButton(_ sender: UIButton) {
     }
     
-    
     @IBAction func deviceHistory(_ sender: UIButton) {
-        performSegue(withIdentifier: "redirectToDeviceHistoryPage", sender: self)
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let deviceHistoryPage = segue.destination as! DeviceHistoryPage
+        let deviceHistoryPage = self.storyboard!.instantiateViewController(withIdentifier: "DeviceHistoryPage") as! DeviceHistoryPage
         deviceHistoryPage.deviceID = deviceID
+        self.navigationController?.pushViewController(deviceHistoryPage, animated: false)
     }
     
-    // function to get date component from calender.
-    func getDateAndTime() -> (date : String, time : String){
-        let presentDate = Date()
-        let calender = Calendar.current
-        let component = calender.dateComponents([.year, .month, .day, .hour, .minute], from: presentDate)
-        let convertedDate = "\(component.day ?? 00)-\(component.month ?? 00)-\(component.year ?? 00)"
-        let convertedTime = "\(component.hour ?? 00):\(component.minute ?? 00)"
-        return (convertedDate, convertedTime)
-    }
+    
     
     // On successfull action of deleting or editing data it will show an successful alert.
     func showAlert() {
@@ -121,14 +150,16 @@ class DisplayDetailsPage: UIViewController, DisplayDeviceProtocol {
     }
     
     // If it fails to perform the operation it will sow an alert regarding the same.
-    func showErrorAlert() {
-        let alert = UIAlertController(title: "Failed", message: "Failed to perform operation", preferredStyle: .alert)
+    func showErrorAlert(title : String, message : String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let FailAction = UIAlertAction(title: "OK", style: .default) { (errorAction) in
         }
         alert.addAction(FailAction)
         present(alert, animated: true, completion: nil)
-        
     }
     
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
+    }
     
 }

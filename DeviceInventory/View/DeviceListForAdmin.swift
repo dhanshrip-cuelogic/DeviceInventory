@@ -8,10 +8,11 @@
 
 import UIKit
 
-class DeviceListForAdmin: UITableViewController, DeviceListForAdminProtocol, CellProtocol {
+class DeviceListForAdmin: CustomNavigationController, DeviceListForAdminProtocol, CellProtocol {
 
+    @IBOutlet weak var tableview: UITableView!
+    
     let deviceListPresenter = DeviceListForAdminPresenter()
-    var resultData: [DeviceDetails] = []
     var sortedList : [DeviceDetails] = []
     var platform : Platform?
     var performEdit : Bool = false
@@ -20,50 +21,57 @@ class DeviceListForAdmin: UITableViewController, DeviceListForAdminProtocol, Cel
     override func viewDidLoad() {
         super.viewDidLoad()
         deviceListPresenter.deviceListDelegate = self
-        deviceListPresenter.databaseReference()
+        tableview.delegate = self
+        tableview.dataSource = self
+        prepareForLoading()
+    }
+    
+    func prepareForLoading() {
+        navigationItem.title = "Device List"
+        navigationItem.leftBarButtonItem = backButton()
+        navigationItem.rightBarButtonItems = [addButton(selector: #selector(redirectToDeviceDetailsPage)), logoutButton()]
         
         //Registering custom cell with nib.
         let cellNib = UINib(nibName: "TableViewCell", bundle: nil)
-        self.tableView.register(cellNib, forCellReuseIdentifier: "Cell")
-        
-        // It will send notification after reading data from firebase and it will call reloadtable() to perform action on this notification.
-        NotificationCenter.default.addObserver(self, selector: #selector(DeviceListForAdmin.reloadTable), name: NSNotification.Name(rawValue: "loadedPost"), object: nil)
+        tableview.register(cellNib, forCellReuseIdentifier: "Cell")
     }
     
     override func viewWillAppear(_ animated: Bool) {
         performEdit = false
-        deviceListPresenter.databaseReference()
-    }
-        
-    // This function will call presenter to get data according to the selected platform and reload data.
-    @objc func reloadTable() {
         if sortedList.count != 0 {
             sortedList.removeAll()
         }
-        sortedList = deviceListPresenter.SortByPlatform()
-        tableView.reloadData()
+        deviceListPresenter.SortByPlatform()
+
     }
     
-    @IBAction func AddDeviceButton(_ sender: UIBarButtonItem) {
-        deviceListPresenter.whenAddDeviceButtonClicked()
+    override func viewDidAppear(_ animated: Bool) {
+        reloadTable()
+    }
+        
+    // This function will call presenter to get data according to the selected platform and reload data.
+    func reloadTable() {
+        tableview.reloadData()
     }
     
-    // Perform segue from device list to Add new device page
-    func transitionToDeviceDetailsPage() {
-        performSegue(withIdentifier: "redirectToDeviceDetailsPage", sender: self)
-    }
-    
-    // Prepare for transition to auto populate the field of device display page only when we will edit data.
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    @objc func redirectToDeviceDetailsPage() {
+        let deviceDetailPage = self.storyboard!.instantiateViewController(withIdentifier: "DeviceDetailsPage") as! DeviceDetailsPage
+        
+        // Prepare for transition to auto populate the field of device display page only when we will edit data.
         if performEdit == true {
-            let deviceDetailPage = segue.destination as! DeviceDetailsPage
-            deviceDetailPage.deviceID = sortedList[(indexForEditing?.row)!].DeviceID
-            deviceDetailPage.modelName = sortedList[(indexForEditing?.row)!].ModelName
-            deviceDetailPage.platform = sortedList[(indexForEditing?.row)!].Platform
-            deviceDetailPage.osVersion = sortedList[(indexForEditing?.row)!].OSVersion
-            deviceDetailPage.status = sortedList[(indexForEditing?.row)!].Status
+            guard let index = indexForEditing else { return }
+            deviceDetailPage.deviceID = sortedList[index.row].DeviceID
+            deviceDetailPage.modelName = sortedList[index.row].ModelName
+            deviceDetailPage.platform = sortedList[index.row].Platform
+            deviceDetailPage.osVersion = sortedList[index.row].OSVersion
+            deviceDetailPage.status = sortedList[index.row].Status
             deviceDetailPage.performEditing = true
+        } else {
+            if platform == Platform.iOS {
+                deviceDetailPage.platform = "iOS"
+            }
         }
+        self.navigationController?.pushViewController(deviceDetailPage, animated: false)
     }
     
     // On click of delete button it will call deleteData method of presenter.
@@ -75,12 +83,12 @@ class DeviceListForAdmin: UITableViewController, DeviceListForAdminProtocol, Cel
     func whenEditButtonPressed(at index: IndexPath) {
         performEdit = true
         indexForEditing = index
-        deviceListPresenter.editButtonClicked()
+        redirectToDeviceDetailsPage()
     }
     
     // On successfull action of deleting or editing data it will show an successful alert.
     func showAlert() {
-        let alert = UIAlertController(title: "Successfull", message: "Saved data Succesfully", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Successfull", message: "Deleted data Succesfully", preferredStyle: .alert)
         let OkAction = UIAlertAction(title: "OK", style: .default) { (saveAction) in
             self.viewWillAppear(true)
         }
@@ -93,30 +101,26 @@ class DeviceListForAdmin: UITableViewController, DeviceListForAdminProtocol, Cel
         let alert = UIAlertController(title: "Failed", message: "Failed to perform operation", preferredStyle: .alert)
         let FailAction = UIAlertAction(title: "OK", style: .default) { (errorAction) in
             self.viewWillAppear(true)
-//            self.reloadTable()
         }
         alert.addAction(FailAction)
         present(alert, animated: true, completion: nil)
         
     }
     
-    // Removing observer.
-    deinit {
-          NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "loadedPost"), object: self)
-    }
 }
 
-extension DeviceListForAdmin {
+extension DeviceListForAdmin : UITableViewDataSource{
+    
     // MARK: - Table view data source
-    override func numberOfSections(in tableView: UITableView) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sortedList.count
     }
-    
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
         cell.cellDelegate = self
         cell.index = indexPath
@@ -125,9 +129,9 @@ extension DeviceListForAdmin {
     }
 }
 
-extension DeviceListForAdmin {
+extension DeviceListForAdmin : UITableViewDelegate{
     // Mark: - Table view delegate
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         // Perform segue to details device page.
     }
     
