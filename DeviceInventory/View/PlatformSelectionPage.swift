@@ -44,12 +44,14 @@ class PlatformSelectionPage: CustomNavigationController, PlatformSelectionProtoc
     func redirectToDeviceListForAdmin() {
         let adminList = self.storyboard!.instantiateViewController(withIdentifier: "deviceListForAdmin") as! DeviceListForAdmin
         adminList.platform = platform
+        adminList.user = user
         self.navigationController?.pushViewController(adminList, animated: false)
     }
     
     func redirectToDeviceListForEmployee() {
         let employeeList = self.storyboard!.instantiateViewController(withIdentifier: "deviceListForEmployee") as! DeviceListForEmployee
         employeeList.platform = platform
+        employeeList.user = user
         self.navigationController?.pushViewController(employeeList, animated: false)
     }
 }

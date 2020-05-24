@@ -22,6 +22,7 @@ class DeviceListForEmployee: CustomNavigationController, DeviceListForEmployeePr
     var issuedUserCueID : String?
     var currentUserCueID : String?
     var currentUserName : String?
+    var user : User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -59,6 +60,7 @@ class DeviceListForEmployee: CustomNavigationController, DeviceListForEmployeePr
         displayDetailsPage.platform =  devicesToDisplay[index.section][index.row].Platform
         displayDetailsPage.osVersion =  devicesToDisplay[index.section][index.row].OSVersion
         displayDetailsPage.status = devicesToDisplay[index.section][index.row].Status
+        displayDetailsPage.user = user
         self.navigationController?.pushViewController(displayDetailsPage, animated: false)
     }
 }
@@ -74,10 +76,6 @@ extension DeviceListForEmployee : UITableViewDataSource{
         return devicesToDisplay[section].count
     }
     
-    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        sectionNames[section]
-    }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = tableView.dequeueReusableCell(withIdentifier: "CellForEmployee")
         if cell == nil {
@@ -88,30 +86,22 @@ extension DeviceListForEmployee : UITableViewDataSource{
     }
     
     
-    //    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-    //        return 35.0
-    //    }
-    //
-    //    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    //
-    //        let view = UIView()
-    //        view.backgroundColor = UIColor(red: CGFloat(0/255.0), green: CGFloat(180/255.0), blue: CGFloat(124/255.0), alpha: CGFloat(1.0))
-    //
-    //        let label = UILabel()
-    //        label.text = sectionNames[section]
-    //        label.frame = CGRect(x: 5, y: 5, width: 100, height: 35)
-    //        label.textColor = UIColor.white
-    //        view.addSubview(label)
-    //        return view
-    //    }
+        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+            return 35.0
+        }
     
+        func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
     
-    //    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int){
-    //        view.tintColor = UIColor(red: CGFloat(0/255.0), green: CGFloat(180/255.0), blue: CGFloat(124/255.0), alpha: CGFloat(1.0) )
-    //        let header = view as! UITableViewHeaderFooterView
-    //        header.textLabel?.textColor = UIColor.white
-    //    }
+            let view = UIView()
+            view.backgroundColor = UIColor(red: CGFloat(0/255.0), green: CGFloat(180/255.0), blue: CGFloat(124/255.0), alpha: CGFloat(1.0))
     
+            let label = UILabel()
+            label.text = sectionNames[section]
+            label.frame = CGRect(x: 20, y: 1, width: 100, height: 35)
+            label.textColor = UIColor.white
+            view.addSubview(label)
+            return view
+        }
 }
 
 extension DeviceListForEmployee : UITableViewDelegate{

@@ -554,7 +554,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6gC-H7-5Ya">
                                                 <rect key="frame" x="60" y="297.5" width="120" height="43.5"/>
                                                 <color key="backgroundColor" systemColor="linkColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="17"/>
                                                 <state key="normal" title="Issued">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -642,7 +642,7 @@
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N3e-B4-RZx">
                                                 <rect key="frame" x="60" y="297.5" width="120" height="43.5"/>
                                                 <color key="backgroundColor" red="0.47397803570000002" green="0.78039215689999997" blue="0.77630186459999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="25"/>
+                                                <fontDescription key="fontDescription" name="OpenSans-Semibold" family="Open Sans" pointSize="17"/>
                                                 <state key="normal" title="Check-in">
                                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -890,13 +890,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B5M-3s-2t4">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="598"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ndh-es-xif">
-                                        <rect key="frame" x="32" y="-44.5" width="256" height="691.5"/>
+                                        <rect key="frame" x="32" y="-44.5" width="256" height="657"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle4" translatesAutoresizingMaskIntoConstraints="NO" id="xfB-3n-F43">
-                                                <rect key="frame" x="102.5" y="98" width="51" height="48"/>
+                                                <rect key="frame" x="104" y="98" width="48" height="48"/>
                                                 <color key="backgroundColor" red="0.019607843140000001" green="0.32156862749999998" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             </imageView>
@@ -1022,7 +1022,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uoj-EV-hh8">
-                                                <rect key="frame" x="51" y="645.5" width="154" height="36"/>
+                                                <rect key="frame" x="51" y="645.5" width="154" height="1.5"/>
                                                 <color key="backgroundColor" red="0.0" green="0.70588235290000001" blue="0.48627450979999998" alpha="1" colorSpace="calibratedRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                                 <state key="normal" title="Login">

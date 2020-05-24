@@ -17,6 +17,7 @@ class DeviceListForAdmin: CustomNavigationController, DeviceListForAdminProtocol
     var platform : Platform?
     var performEdit : Bool = false
     var indexForEditing : IndexPath?
+    var user : User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,7 +105,17 @@ class DeviceListForAdmin: CustomNavigationController, DeviceListForAdminProtocol
         }
         alert.addAction(FailAction)
         present(alert, animated: true, completion: nil)
-        
+    }
+    
+    func transitionToDisplayDevice(at index: IndexPath) {
+        let displayDetailsPage = self.storyboard!.instantiateViewController(withIdentifier: "redirectToDisplayDetailsPage") as! DisplayDetailsPage
+        displayDetailsPage.deviceID = sortedList[index.row].DeviceID
+        displayDetailsPage.modelName =  sortedList[index.row].ModelName
+        displayDetailsPage.platform =  sortedList[index.row].Platform
+        displayDetailsPage.osVersion =  sortedList[index.row].OSVersion
+        displayDetailsPage.status = sortedList[index.row].Status
+        displayDetailsPage.user = user
+        self.navigationController?.pushViewController(displayDetailsPage, animated: false)
     }
     
 }
@@ -132,7 +143,8 @@ extension DeviceListForAdmin : UITableViewDataSource{
 extension DeviceListForAdmin : UITableViewDelegate{
     // Mark: - Table view delegate
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        // Perform segue to details device page.
+        // Perform transtion to details device page.
+        transitionToDisplayDevice(at: indexPath)
     }
     
 }

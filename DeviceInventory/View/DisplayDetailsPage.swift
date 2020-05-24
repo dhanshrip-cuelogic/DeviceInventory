@@ -31,6 +31,7 @@ class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MF
     var issuedUserCueID : String?
     var currentUserCueID : String?
     var currentUserName : String?
+    var user : User?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,13 +51,32 @@ class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MF
         complaintButton.layer.cornerRadius = 5.0
         
         displayPresenter.currentDeviceID = deviceID
-        displayPresenter.getCueID()
+       
+        
         deviceIDLabel.text = deviceID
         modelNameLabel.text = modelName
         platformLabel.text = platform
         osVersionLabel.text = osVersion
-        
-        
+    
+        if user == User.employee {
+            displayPresenter.getCurrentUser { (userID, userName) in
+                   self.currentUserCueID = userID
+                   self.currentUserName = userName
+                   self.setActionButton()
+            }
+            
+            displayPresenter.getIssuedUser { (issuedBy) in
+                   self.issuedUserCueID = issuedBy
+                   self.setActionButton()
+            }
+        } else if user == User.admin{
+            CheckinButtonLabel.isHidden = true
+            checkoutButtonLabel.isHidden = true
+            issuedButtonLabel.isHidden = true
+        }
+    }
+    
+    func setActionButton() {
         if status == "Available" {
             CheckinButtonLabel.isHidden = false
             checkoutButtonLabel.isHidden = true

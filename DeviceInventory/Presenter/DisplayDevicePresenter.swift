@@ -67,23 +67,39 @@ class DisplayDevicePresenter {
         }
     }
     
-    func getCueID() {
+    func getCurrentUser(completionHandler : @escaping (String?,String?)->()) {
         // This will call a method from DatabaseManager to save checkout time of that device.
         let user = Auth.auth().currentUser
+        var userID : String = ""
+        var userName : String = ""
         DatabaseManager.shared.takeSnapshotOfEmployeeDetails { (employeeDetails) in
+
             for employee in employeeDetails! {
                 if employee.Email == user?.email {
-                    self.displayDelegate?.currentUserCueID = employee.CueID
-                    self.displayDelegate?.currentUserName = employee.Username
+//                    self.displayDelegate?.currentUserCueID = employee.CueID
+//                    self.displayDelegate?.currentUserName = employee.Username
+                    userID = employee.CueID
+                    userName = employee.Username
+                    completionHandler(userID,userName)
+                } else {
+                    completionHandler(nil,nil)
                 }
             }
         }
+    }
+    
+    func getIssuedUser(completionHandler : @escaping (String?)->()) {
+        var issuedBy : String = ""
         DatabaseManager.shared.takeSnapshotOfIssuedDeviceTable { (issuedDevices) in
-            for device in issuedDevices! {
-                if device.DeviceID == self.currentDeviceID {
-                    self.displayDelegate?.issuedUserCueID = device.CueID
+                for device in issuedDevices! {
+                    if device.DeviceID == self.currentDeviceID {
+    //                    self.displayDelegate?.issuedUserCueID = device.CueID
+                        issuedBy = device.CueID
+                        completionHandler(issuedBy)
+                    } else {
+                        completionHandler(nil)
+                    }
                 }
-            }
         }
     }
     
