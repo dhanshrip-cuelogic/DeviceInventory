@@ -107,7 +107,7 @@ class DatabaseManager {
     func takeSnapshotForDeviceHistory(of deviceId : String,fromDate: TimeInterval, toDate: TimeInterval, fetchingAgain : Bool, completionHandler : @escaping ([IssuedDevices]?) -> ()) {
         if fetchingAgain == false {
              ref.child("IssuedDeviceTable")
-                .queryOrdered(byChild: "DeviceID")
+                .queryOrdered(byChild: "deviceID")
                 .queryEqual(toValue: deviceId)
                 .queryLimited(toFirst: 10)
                 .observeSingleEvent(of: .value, with: { snapshot in
@@ -130,7 +130,7 @@ class DatabaseManager {
             guard let lastKey = keys.last else { return }
        
             ref.child("IssuedDeviceTable")
-                .queryOrdered(byChild:"DeviceID")
+                .queryOrdered(byChild:"deviceID")
                 .queryStarting(atValue: deviceId, childKey: lastKey)
                 .queryEnding(atValue: deviceId)
                 .queryLimited(toFirst: 10)
@@ -153,7 +153,7 @@ class DatabaseManager {
     
     
     func addNewDevice(deviceID : String, modelName : String, platform : String, osVersion : String) {
-        ref.child("DeviceTable").child(deviceID).setValue(["DeviceID" : deviceID,"ModelName" : modelName,"Platform" : platform,"OSVersion" : osVersion, "Status" : "Available"]) {
+        ref.child("DeviceTable").child(deviceID).setValue(["deviceID" : deviceID,"modelName" : modelName,"platform" : platform,"oSVersion" : osVersion, "status" : "Available"]) {
             (error:Error?, ref:DatabaseReference) in
             if error != nil {
                 self.successful = false
@@ -164,7 +164,7 @@ class DatabaseManager {
     }
     
     func updateDatabase(with id: String, modelName : String, platform : String, osVersion : String, status : String) {
-        ref.child("DeviceTable/\(id)").setValue(["DeviceID" : id,"ModelName" : modelName,"Platform" : platform,"OSVersion" : osVersion, "Status" : status]) {
+        ref.child("DeviceTable/\(id)").setValue(["deviceID" : id,"modelName" : modelName,"platform" : platform,"oSVersion" : osVersion, "status" : status]) {
             (error:Error?, ref:DatabaseReference) in
             if error != nil {
                 self.successful = false
@@ -195,7 +195,7 @@ class DatabaseManager {
         
         let timestamp =  Date().timeIntervalSince1970
         
-        ref.child("IssuedDeviceTable").child(childID).setValue(["CueID" : cueID,"Name" : name, "DeviceID" : deviceID, "Date" : timestamp, "Checkin" : checkin, "Checkout" : "-- : --", "Status" : "Issued"]) { (error:Error?,ref:DatabaseReference) in
+        ref.child("IssuedDeviceTable").child(childID).setValue(["cueID" : cueID,"name" : name, "deviceID" : deviceID, "date" : timestamp, "checkin" : checkin, "checkout" : "-- : --", "status" : "Issued"]) { (error:Error?,ref:DatabaseReference) in
             if error != nil {
                 self.successful = false
             } else {
@@ -205,7 +205,7 @@ class DatabaseManager {
     }
     
     func addCheckOut(childID : String, cueID : String, name : String, deviceID : String, date : TimeInterval, checkin : String, checkout : String) {
-        ref.child("IssuedDeviceTable").child(childID).setValue(["CueID" : cueID,"Name" : name, "DeviceID" : deviceID, "Date" : date, "Checkin" : checkin, "Checkout" : checkout, "Status" : "Available"]) {
+        ref.child("IssuedDeviceTable").child(childID).setValue(["cueID" : cueID,"name" : name, "deviceID" : deviceID, "date" : date, "checkin" : checkin, "checkout" : checkout, "status" : "Available"]) {
             (error:Error?, ref:DatabaseReference) in
             if error != nil {
                 self.successful = false
@@ -216,7 +216,7 @@ class DatabaseManager {
     }
     
     func createNewUser(cueID : String, email : String, username : String) {
-        ref.child("EmployeeTable").child(cueID).setValue(["CueID" : cueID, "Email" : email, "Username" : username]) {
+        ref.child("EmployeeTable").child(cueID).setValue(["cueID" : cueID, "email" : email, "username" : username]) {
             (error:Error?, ref:DatabaseReference) in
             if error != nil {
                 self.successful = false
@@ -227,11 +227,11 @@ class DatabaseManager {
     }
     
     func updateDeviceStatusAfterCheckin(of deviceID: String) {
-        ref.child("DeviceTable").child(deviceID).child("Status").setValue("Issued")
+        ref.child("DeviceTable").child(deviceID).child("status").setValue("Issued")
     }
     
     func updateDeviceStatusAfterCheckout(of deviceID: String) {
-        ref.child("DeviceTable").child(deviceID).child("Status").setValue("Available")
+        ref.child("DeviceTable").child(deviceID).child("status").setValue("Available")
     }
     
 }

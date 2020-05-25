@@ -24,10 +24,10 @@ class DeviceListForAdmin: CustomNavigationController, DeviceListForAdminProtocol
         deviceListPresenter.deviceListDelegate = self
         tableview.delegate = self
         tableview.dataSource = self
-        prepareForLoading()
+        initUI()
     }
     
-    func prepareForLoading() {
+    func initUI() {
         navigationItem.title = "Device List"
         navigationItem.leftBarButtonItem = backButton()
         navigationItem.rightBarButtonItems = [addButton(selector: #selector(redirectToDeviceDetailsPage)), logoutButton()]
@@ -42,7 +42,7 @@ class DeviceListForAdmin: CustomNavigationController, DeviceListForAdminProtocol
         if sortedList.count != 0 {
             sortedList.removeAll()
         }
-        deviceListPresenter.SortByPlatform()
+        deviceListPresenter.sortByPlatform()
 
     }
     
@@ -61,11 +61,11 @@ class DeviceListForAdmin: CustomNavigationController, DeviceListForAdminProtocol
         // Prepare for transition to auto populate the field of device display page only when we will edit data.
         if performEdit == true {
             guard let index = indexForEditing else { return }
-            deviceDetailPage.deviceID = sortedList[index.row].DeviceID
-            deviceDetailPage.modelName = sortedList[index.row].ModelName
-            deviceDetailPage.platform = sortedList[index.row].Platform
-            deviceDetailPage.osVersion = sortedList[index.row].OSVersion
-            deviceDetailPage.status = sortedList[index.row].Status
+            deviceDetailPage.deviceID = sortedList[index.row].deviceID
+            deviceDetailPage.modelName = sortedList[index.row].modelName
+            deviceDetailPage.platform = sortedList[index.row].platform
+            deviceDetailPage.osVersion = sortedList[index.row].oSVersion
+            deviceDetailPage.status = sortedList[index.row].status
             deviceDetailPage.performEditing = true
         } else {
             if platform == Platform.iOS {
@@ -109,11 +109,11 @@ class DeviceListForAdmin: CustomNavigationController, DeviceListForAdminProtocol
     
     func transitionToDisplayDevice(at index: IndexPath) {
         let displayDetailsPage = self.storyboard!.instantiateViewController(withIdentifier: "redirectToDisplayDetailsPage") as! DisplayDetailsPage
-        displayDetailsPage.deviceID = sortedList[index.row].DeviceID
-        displayDetailsPage.modelName =  sortedList[index.row].ModelName
-        displayDetailsPage.platform =  sortedList[index.row].Platform
-        displayDetailsPage.osVersion =  sortedList[index.row].OSVersion
-        displayDetailsPage.status = sortedList[index.row].Status
+        displayDetailsPage.deviceID = sortedList[index.row].deviceID
+        displayDetailsPage.modelName =  sortedList[index.row].modelName
+        displayDetailsPage.platform =  sortedList[index.row].platform
+        displayDetailsPage.osVersion =  sortedList[index.row].oSVersion
+        displayDetailsPage.status = sortedList[index.row].status
         displayDetailsPage.user = user
         self.navigationController?.pushViewController(displayDetailsPage, animated: false)
     }
@@ -135,7 +135,7 @@ extension DeviceListForAdmin : UITableViewDataSource{
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath) as! TableViewCell
         cell.cellDelegate = self
         cell.index = indexPath
-        cell.textLabel?.text = sortedList[indexPath.row].ModelName
+        cell.textLabel?.text = sortedList[indexPath.row].modelName
         return cell
     }
 }

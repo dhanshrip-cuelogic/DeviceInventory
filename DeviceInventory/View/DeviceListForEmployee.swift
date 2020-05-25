@@ -29,10 +29,10 @@ class DeviceListForEmployee: CustomNavigationController, DeviceListForEmployeePr
         deviceListPresenter.deviceListDelegate = self
         tableview.delegate = self
         tableview.dataSource = self
-        prepareForLoading()
+        initUI()
     }
     
-    func prepareForLoading() {
+    func initUI() {
         self.navigationItem.hidesBackButton = true
         navigationItem.leftBarButtonItem = backButton()
         navigationItem.rightBarButtonItem = logoutButton()
@@ -55,11 +55,11 @@ class DeviceListForEmployee: CustomNavigationController, DeviceListForEmployeePr
     
     func transitionToDisplayDevice(at index: IndexPath) {
         let displayDetailsPage = self.storyboard!.instantiateViewController(withIdentifier: "redirectToDisplayDetailsPage") as! DisplayDetailsPage
-        displayDetailsPage.deviceID = devicesToDisplay[index.section][index.row].DeviceID
-        displayDetailsPage.modelName =  devicesToDisplay[index.section][index.row].ModelName
-        displayDetailsPage.platform =  devicesToDisplay[index.section][index.row].Platform
-        displayDetailsPage.osVersion =  devicesToDisplay[index.section][index.row].OSVersion
-        displayDetailsPage.status = devicesToDisplay[index.section][index.row].Status
+        displayDetailsPage.deviceID = devicesToDisplay[index.section][index.row].deviceID
+        displayDetailsPage.modelName =  devicesToDisplay[index.section][index.row].modelName
+        displayDetailsPage.platform =  devicesToDisplay[index.section][index.row].platform
+        displayDetailsPage.osVersion =  devicesToDisplay[index.section][index.row].oSVersion
+        displayDetailsPage.status = devicesToDisplay[index.section][index.row].status
         displayDetailsPage.user = user
         self.navigationController?.pushViewController(displayDetailsPage, animated: false)
     }
@@ -81,27 +81,27 @@ extension DeviceListForEmployee : UITableViewDataSource{
         if cell == nil {
             cell = UITableViewCell(style: .default, reuseIdentifier: "CellForEmployee")
         }
-        cell?.textLabel?.text = devicesToDisplay[indexPath.section][indexPath.row].ModelName
+        cell?.textLabel?.text = devicesToDisplay[indexPath.section][indexPath.row].modelName
         return cell!
     }
     
     
-        func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-            return 35.0
-        }
-    
-        func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-    
-            let view = UIView()
-            view.backgroundColor = UIColor(red: CGFloat(0/255.0), green: CGFloat(180/255.0), blue: CGFloat(124/255.0), alpha: CGFloat(1.0))
-    
-            let label = UILabel()
-            label.text = sectionNames[section]
-            label.frame = CGRect(x: 20, y: 1, width: 100, height: 35)
-            label.textColor = UIColor.white
-            view.addSubview(label)
-            return view
-        }
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35.0
+    }
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+
+        let view = UIView()
+        view.backgroundColor = UIColor(red: CGFloat(0/255.0), green: CGFloat(180/255.0), blue: CGFloat(124/255.0), alpha: CGFloat(1.0))
+
+        let label = UILabel()
+        label.text = sectionNames[section]
+        label.frame = CGRect(x: 20, y: 1, width: 100, height: 35)
+        label.textColor = UIColor.white
+        view.addSubview(label)
+        return view
+    }
 }
 
 extension DeviceListForEmployee : UITableViewDelegate{

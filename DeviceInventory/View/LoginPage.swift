@@ -24,6 +24,8 @@ class LoginPage: CustomNavigationController, LoginPageProtocol {
     var errorTextFieldOfLoginPage : UILabel?
     var user : User?
     let loginPresenter = LoginPresenter()
+    var reachability : Reachability?
+
     
     @IBOutlet weak var circularImage: UIImageView!
     @IBOutlet weak var StackView: UIStackView!
@@ -37,17 +39,22 @@ class LoginPage: CustomNavigationController, LoginPageProtocol {
         super.viewDidLoad()
         
         loginPresenter.loginDelegate = self
-        prepareForLoading()
+        self.reachability = try? Reachability.init()
+        
+        if self.reachability?.connection != Reachability.Connection.unavailable {
+            initUI()
+        } else {
+            showErrorAlert(title: "Not Connected", message: "Please check your internet connection.")
+        }
     }
     
-    func prepareForLoading() {
+    func initUI() {
         self.navigationItem.hidesBackButton = true
         navigationItem.title = "Login"
         navigationItem.leftBarButtonItem = backToHomeScreen()
         
         // To set radius to the borders of button and Set this login page as delegate of its presenter.
-        emailTextField.addBottomBorder()
-        passwordTextField.addBottomBorder()
+
         circularImage.layer.masksToBounds = true
         circularImage.layer.cornerRadius = circularImage.bounds.width / 2
         errorTextField.alpha = 0
@@ -74,5 +81,16 @@ class LoginPage: CustomNavigationController, LoginPageProtocol {
         platformSelection.user = user
         self.navigationController?.pushViewController(platformSelection, animated: false)
     }
+    
+    func showErrorAlert(title : String, message : String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let FailAction = UIAlertAction(title: "OK", style: .default) { (errorAction) in
+            self.viewDidLoad()
+        }
+        alert.addAction(FailAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
+    
 }
 

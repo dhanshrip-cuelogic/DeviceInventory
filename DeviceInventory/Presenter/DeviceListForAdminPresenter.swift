@@ -25,11 +25,11 @@ class DeviceListForAdminPresenter {
     var deviceListDelegate : DeviceListForAdminProtocol?
     
     // This function is to get fetched data from DatabaseManager and returning array of data according to the selected platform.
-    func SortByPlatform() {
+    func sortByPlatform() {
         DatabaseManager.shared.takeSnapshotOfDeviceTable { (fetchedData) in
             var resultData : [DeviceDetails] = []
             for device in fetchedData! {
-                if device.Platform == self.deviceListDelegate?.platform?.rawValue {
+                if device.platform == self.deviceListDelegate?.platform?.rawValue {
                     resultData.append(device)
                 }
             }
@@ -40,7 +40,7 @@ class DeviceListForAdminPresenter {
     
     // It will take the deviceId as argument and call delete function from DatabaseManager.
     func deleteData(at index : IndexPath) {
-        guard let id = deviceListDelegate?.sortedList[index.row].DeviceID else { return }
+        guard let id = deviceListDelegate?.sortedList[index.row].deviceID else { return }
         DatabaseManager.shared.deleteFromDatabase(with: id)
         if DatabaseManager.shared.successful == true {
             deviceListDelegate?.showAlert()

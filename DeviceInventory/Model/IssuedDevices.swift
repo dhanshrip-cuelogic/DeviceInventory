@@ -9,11 +9,11 @@
 import Foundation
 
 struct IssuedDevices : Codable {
-    var CueID : String
-    var Name : String
-    var DeviceID : String
-    var Date : TimeInterval
-    var Checkin : String
-    var Checkout : String
-    var Status : String
+    var cueID : String
+    var name : String
+    var deviceID : String
+    var date : TimeInterval
+    var checkin : String
+    var checkout : String
+    var status : String
 }

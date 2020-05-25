@@ -111,11 +111,11 @@
             </constraints>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
-                <outlet property="CheckinLabel" destination="Ige-N7-Go9" id="Xsd-zv-LEV"/>
-                <outlet property="CheckoutLabel" destination="vnI-kN-Vt1" id="Q41-Tr-6n1"/>
-                <outlet property="CueIDLabel" destination="gJG-iH-N0c" id="zbi-U0-qm9"/>
-                <outlet property="DateLabel" destination="qXM-Qh-DPI" id="PCS-6E-HM6"/>
-                <outlet property="NameLabel" destination="Gni-wc-T06" id="lKQ-js-Yyj"/>
+                <outlet property="checkinLabel" destination="Ige-N7-Go9" id="wBM-Kf-L54"/>
+                <outlet property="checkoutLabel" destination="vnI-kN-Vt1" id="4DW-Sr-fKw"/>
+                <outlet property="cueIDLabel" destination="gJG-iH-N0c" id="SmE-p9-LIc"/>
+                <outlet property="dateLabel" destination="qXM-Qh-DPI" id="uLI-PI-FFd"/>
+                <outlet property="nameLabel" destination="Gni-wc-T06" id="lTZ-25-RV1"/>
             </connections>
             <point key="canvasLocation" x="131.8840579710145" y="132.58928571428572"/>
         </tableViewCell>

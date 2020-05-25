@@ -14,6 +14,8 @@ class SignUpPage: CustomNavigationController, SignUpProtocol {
     
     var errorTextFieldOfSignUpPage: UILabel?
     let signUpPresenter = SignUpPresenter()
+    var reachability : Reachability?
+
 
     @IBOutlet weak var signUpEmailTextField: UITextField!
     @IBOutlet weak var signUpCueIdTextField: UITextField!
@@ -27,10 +29,17 @@ class SignUpPage: CustomNavigationController, SignUpProtocol {
     override func viewDidLoad() {
        super.viewDidLoad()
        signUpPresenter.signUpDelegate = self as SignUpProtocol
-       prepareForLoading()
+       self.reachability = try? Reachability.init()
+       
+       if self.reachability?.connection != Reachability.Connection.unavailable {
+           initUI()
+       } else {
+           showErrorAlert(title: "Not Connected", message: "Please check your internet connection.")
+       }
+        
     }
     
-    func prepareForLoading() {
+    func initUI() {
         // To add bottom layer for textfields and set borders for buttons.
         self.navigationItem.hidesBackButton = true
         navigationItem.title = "SignUp"
@@ -40,10 +49,7 @@ class SignUpPage: CustomNavigationController, SignUpProtocol {
         circularImage.layer.cornerRadius = circularImage.bounds.width / 2
         signUpButton.layer.cornerRadius = 5.0
         loginButton.layer.cornerRadius = 5.0
-        signUpEmailTextField.addBottomBorder()
-        signUpCueIdTextField.addBottomBorder()
-        signUpUsernameTextField.addBottomBorder()
-        signUpPasswordTextField.addBottomBorder()
+        
     }
     
     // For redirection to Login Page on successfull signUp of new user.
@@ -52,7 +58,7 @@ class SignUpPage: CustomNavigationController, SignUpProtocol {
     }
 
     // When signUp button is clicked it will send the data from textfields to the presenter for validation and creation of new user.
-    @IBAction func SignUpButtonClicked(_ sender: UIButton) {
+    @IBAction func signUpButtonClicked(_ sender: UIButton) {
         signUpPresenter.signUpEmailFromSignUpPage = signUpEmailTextField.text!
         signUpPresenter.signUpPasswordFromSignUpPage = signUpPasswordTextField.text!
         signUpPresenter.signUpCueIDFromSignUpPage = signUpCueIdTextField.text!
@@ -64,6 +70,15 @@ class SignUpPage: CustomNavigationController, SignUpProtocol {
     func redirect() {
         let loginpage = self.storyboard!.instantiateViewController(withIdentifier: "Loginpage") as! LoginPage
         self.navigationController?.pushViewController(loginpage, animated: false)
+    }
+    
+    func showErrorAlert(title : String, message : String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let FailAction = UIAlertAction(title: "OK", style: .default) { (errorAction) in
+            self.viewDidLoad()
+        }
+        alert.addAction(FailAction)
+        present(alert, animated: true, completion: nil)
     }
     
 }

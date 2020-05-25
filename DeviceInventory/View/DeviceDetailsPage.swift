@@ -10,15 +10,15 @@ import UIKit
 
 class DeviceDetailsPage: CustomNavigationController, DeviceDetailsProtocol {
     
-    @IBOutlet weak var DeviceIDTextField: UITextField!
-    @IBOutlet weak var ModelNameTextField: UITextField!
-    @IBOutlet weak var PlatformTextField: UITextField!
-    @IBOutlet weak var OSVersionTextfield: UITextField!
-    @IBOutlet weak var ErrorLabel: UILabel!
+    @IBOutlet weak var deviceIDTextField: UITextField!
+    @IBOutlet weak var modelNameTextField: UITextField!
+    @IBOutlet weak var platformTextField: UITextField!
+    @IBOutlet weak var oSVersionTextfield: UITextField!
+    @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var currentDeviceButton: UIButton!
     
-    var errorLabel : UILabel?
+    var errorText : UILabel?
     var performEditing : Bool?
     
     // Data recieved from Device List Page
@@ -33,17 +33,17 @@ class DeviceDetailsPage: CustomNavigationController, DeviceDetailsProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         deviceDetailPresenter.deviceDetailDelegate = self
-        prepareForLoading()
+        initUI()
     }
     
-    func prepareForLoading() {
+    func initUI() {
         navigationItem.title = "Device Details"
-        ErrorLabel.alpha = 0
+        errorLabel.alpha = 0
         saveButton.layer.cornerRadius = 5.0
-        DeviceIDTextField.addBottomBorder()
-        ModelNameTextField.addBottomBorder()
-        PlatformTextField.addBottomBorder()
-        OSVersionTextfield.addBottomBorder()
+        deviceIDTextField.addBottomBorder()
+        modelNameTextField.addBottomBorder()
+        platformTextField.addBottomBorder()
+        oSVersionTextfield.addBottomBorder()
         
         // This button works temporarily for adding iOS devices only, otherwise it will be hidden.
         if platform != "iOS" {
@@ -55,21 +55,21 @@ class DeviceDetailsPage: CustomNavigationController, DeviceDetailsProtocol {
         
         // if the opeartion is to perform edit then fields will get auto populated with the details of that device.
         if performEditing == true {
-            DeviceIDTextField.text = deviceID
-            ModelNameTextField.text = modelName
-            PlatformTextField.text = platform
-            OSVersionTextfield.text = osVersion
+            deviceIDTextField.text = deviceID
+            modelNameTextField.text = modelName
+            platformTextField.text = platform
+            oSVersionTextfield.text = osVersion
         }
     }
     
     //This will call saveButtonClicked method from presenter to add new device data into database.
     @IBAction func SaveButton(_ sender: UIButton) {
-        deviceDetailPresenter.deviceID = DeviceIDTextField.text!
-        deviceDetailPresenter.modelName = ModelNameTextField.text!
-        deviceDetailPresenter.platform = PlatformTextField.text!
-        deviceDetailPresenter.osVersion = OSVersionTextfield.text!
+        deviceDetailPresenter.deviceID = deviceIDTextField.text!
+        deviceDetailPresenter.modelName = modelNameTextField.text!
+        deviceDetailPresenter.platform = platformTextField.text!
+        deviceDetailPresenter.osVersion = oSVersionTextfield.text!
         deviceDetailPresenter.status = status
-        errorLabel = ErrorLabel
+        errorText = errorLabel
         deviceDetailPresenter.performEditing = performEditing
         
         deviceDetailPresenter.saveButtonClicked()
@@ -78,9 +78,9 @@ class DeviceDetailsPage: CustomNavigationController, DeviceDetailsProtocol {
     @IBAction func addCurrrentDevice(_ sender: UIButton) {
         guard let platform = platform else { return }
         if platform == "iOS" {
-            OSVersionTextfield.text = deviceDetailPresenter.getOSversion()
-            ModelNameTextField.text = deviceDetailPresenter.getModelName()
-            PlatformTextField.text = "iOS"
+            oSVersionTextfield.text = deviceDetailPresenter.getOSversion()
+            modelNameTextField.text = deviceDetailPresenter.getModelName()
+            platformTextField.text = "iOS"
         } else {
             // If platform is android then call function to fetch details from android device.
         }

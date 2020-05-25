@@ -10,7 +10,7 @@ import Foundation
 import Firebase
 
 protocol DeviceDetailsProtocol {
-    var errorLabel : UILabel? { get set }
+    var errorText : UILabel? { get set }
     func showAlert()
 }
 
@@ -56,8 +56,8 @@ class DeviceDetailsPresenter {
     }
     
     func showError(_ message : String) {
-        deviceDetailDelegate?.errorLabel?.text = message
-        deviceDetailDelegate?.errorLabel?.alpha = 1
+        deviceDetailDelegate?.errorText?.text = message
+        deviceDetailDelegate?.errorText?.alpha = 1
     }
     
     func validate() -> String? {

@@ -18,7 +18,7 @@ class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MF
     @IBOutlet weak var osVersionLabel: UILabel!
     @IBOutlet weak var issuedButtonLabel: UIButton!
     @IBOutlet weak var checkoutButtonLabel: UIButton!
-    @IBOutlet weak var CheckinButtonLabel: UIButton!
+    @IBOutlet weak var checkinButtonLabel: UIButton!
     @IBOutlet weak var historyButton: UIButton!
     @IBOutlet weak var complaintButton: UIButton!
     
@@ -36,15 +36,15 @@ class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MF
     override func viewDidLoad() {
         super.viewDidLoad()
         displayPresenter.displayDelegate = self
-        prepareForLoading()
+        initUI()
     }
     
-    func prepareForLoading() {
+    func initUI() {
         self.navigationItem.hidesBackButton = true
         navigationItem.title = "Device Details"
         navigationItem.leftBarButtonItem = backButton()
         
-        CheckinButtonLabel.layer.cornerRadius = 5.0
+        checkinButtonLabel.layer.cornerRadius = 5.0
         checkoutButtonLabel.layer.cornerRadius = 5.0
         issuedButtonLabel.layer.cornerRadius = 5.0
         historyButton.layer.cornerRadius = 5.0
@@ -70,7 +70,7 @@ class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MF
                    self.setActionButton()
             }
         } else if user == User.admin{
-            CheckinButtonLabel.isHidden = true
+            checkinButtonLabel.isHidden = true
             checkoutButtonLabel.isHidden = true
             issuedButtonLabel.isHidden = true
         }
@@ -78,7 +78,7 @@ class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MF
     
     func setActionButton() {
         if status == "Available" {
-            CheckinButtonLabel.isHidden = false
+            checkinButtonLabel.isHidden = false
             checkoutButtonLabel.isHidden = true
             issuedButtonLabel.isHidden = true
         }
@@ -86,16 +86,16 @@ class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MF
             if issuedUserCueID == currentUserCueID {
                 checkoutButtonLabel.isHidden = false
                 issuedButtonLabel.isHidden = true
-                CheckinButtonLabel.isHidden = true
+                checkinButtonLabel.isHidden = true
             } else {
                 issuedButtonLabel.isHidden = false
                 checkoutButtonLabel.isHidden = true
-                CheckinButtonLabel.isHidden = true
+                checkinButtonLabel.isHidden = true
             }
         }
     }
 
-    @IBAction func Checkin(_ sender: UIButton) {
+    @IBAction func checkin(_ sender: UIButton) {
         // It will call a method from presenter to perform action of this button i.e., to save time of check-in for this user.
         let currentDateAndTime = displayPresenter.getDateAndTime()
         let currentDate = currentDateAndTime.date
@@ -108,7 +108,7 @@ class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MF
         displayPresenter.whenCheckinButtonIsClicked(childID : childID, cueID: id, name : name, deviceID: deviceid, date: currentDate, checkin: currentTime)
     }
     
-    @IBAction func Checkout(_ sender: UIButton) {
+    @IBAction func checkout(_ sender: UIButton) {
         // It will call a method from presenter to perform action of this button i.e., to save time of check-in for this user.
         let currentTime = displayPresenter.getDateAndTime().time
         guard let deviceid = deviceID else { return }
@@ -150,7 +150,7 @@ class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MF
         let alert = UIAlertController(title: "Successfull", message: "Issued device Succesfully", preferredStyle: .alert)
         let OkAction = UIAlertAction(title: "OK", style: .default) { (saveAction) in
             self.checkoutButtonLabel.isHidden = false
-            self.CheckinButtonLabel.isHidden = true
+            self.checkinButtonLabel.isHidden = true
             self.issuedButtonLabel.isHidden = true
         }
         alert.addAction(OkAction)
@@ -162,7 +162,7 @@ class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MF
         let alert = UIAlertController(title: "Successfull", message: "Checkout Succesfully", preferredStyle: .alert)
         let OkAction = UIAlertAction(title: "OK", style: .default) { (saveAction) in
             self.checkoutButtonLabel.isHidden = true
-            self.CheckinButtonLabel.isHidden = false
+            self.checkinButtonLabel.isHidden = false
             self.issuedButtonLabel.isHidden = true
         }
         alert.addAction(OkAction)

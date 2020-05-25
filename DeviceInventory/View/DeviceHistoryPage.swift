@@ -22,11 +22,11 @@ class DeviceHistoryPage: UITableViewController, DeviceHistoryProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         deviceHistoryPresenter.deviceHistoryDelegate = self
-        prepareForLoading()
+        initUI()
         
     }
     
-    func prepareForLoading() {
+    func initUI() {
         navigationItem.title = "Device History"
         
         //Registering custom cell with nib.
@@ -53,7 +53,7 @@ class DeviceHistoryPage: UITableViewController, DeviceHistoryProtocol {
     }
     
     func getDate(indexPath : IndexPath) -> String {
-        let date = issuedDevices[indexPath.row].Date
+        let date = issuedDevices[indexPath.row].date
         
         let dateFormat = DateFormatter()
         dateFormat.timeZone = TimeZone.current
@@ -77,11 +77,11 @@ extension DeviceHistoryPage {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         tableView.rowHeight = 100
         let cell = tableView.dequeueReusableCell(withIdentifier: "deviceHistoryCell", for: indexPath) as! DeviceHistoryCell
-        cell.CueIDLabel.text = issuedDevices[indexPath.row].CueID
-        cell.NameLabel.text = issuedDevices[indexPath.row].Name
-        cell.DateLabel.text = getDate(indexPath: indexPath)
-        cell.CheckinLabel.text = issuedDevices[indexPath.row].Checkin
-        cell.CheckoutLabel.text = issuedDevices[indexPath.row].Checkout
+        cell.cueIDLabel.text = issuedDevices[indexPath.row].cueID
+        cell.nameLabel.text = issuedDevices[indexPath.row].name
+        cell.dateLabel.text = getDate(indexPath: indexPath)
+        cell.checkinLabel.text = issuedDevices[indexPath.row].checkin
+        cell.checkoutLabel.text = issuedDevices[indexPath.row].checkout
         return cell
     }
 }

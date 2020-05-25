@@ -8,6 +8,6 @@
 
 import Foundation
 enum Platform : String {
-    case Android = "Android"
+    case android = "Android"
     case iOS = "iOS"
 }

@@ -44,8 +44,8 @@ class DisplayDevicePresenter {
             var keyIndex = 0
             
             for device in checkedInDetails! {
-                if device.DeviceID == deviceID {
-                    if device.Checkout == "-- : --" {
+                if device.deviceID == deviceID {
+                    if device.checkout == "-- : --" {
                         checkedinDeviceDetails = device
                         self.childid = DatabaseManager.shared.keys[keyIndex]
                     }
@@ -55,7 +55,7 @@ class DisplayDevicePresenter {
             guard let device = checkedinDeviceDetails else { return }
             //            let childid = self.getChildID(date: device.Date)
             
-            DatabaseManager.shared.addCheckOut(childID: self.childid, cueID: device.CueID, name: device.Name, deviceID: deviceID, date: device.Date, checkin: device.Checkin, checkout: checkout)
+            DatabaseManager.shared.addCheckOut(childID: self.childid, cueID: device.cueID, name: device.name, deviceID: deviceID, date: device.date, checkin: device.checkin, checkout: checkout)
             
             if DatabaseManager.shared.successful == true {
                 // Change the status of that device in DeviceTable as well.
@@ -75,11 +75,11 @@ class DisplayDevicePresenter {
         DatabaseManager.shared.takeSnapshotOfEmployeeDetails { (employeeDetails) in
 
             for employee in employeeDetails! {
-                if employee.Email == user?.email {
+                if employee.email == user?.email {
 //                    self.displayDelegate?.currentUserCueID = employee.CueID
 //                    self.displayDelegate?.currentUserName = employee.Username
-                    userID = employee.CueID
-                    userName = employee.Username
+                    userID = employee.cueID
+                    userName = employee.username
                     completionHandler(userID,userName)
                 } else {
                     completionHandler(nil,nil)
@@ -92,9 +92,9 @@ class DisplayDevicePresenter {
         var issuedBy : String = ""
         DatabaseManager.shared.takeSnapshotOfIssuedDeviceTable { (issuedDevices) in
                 for device in issuedDevices! {
-                    if device.DeviceID == self.currentDeviceID {
+                    if device.deviceID == self.currentDeviceID {
     //                    self.displayDelegate?.issuedUserCueID = device.CueID
-                        issuedBy = device.CueID
+                        issuedBy = device.cueID
                         completionHandler(issuedBy)
                     } else {
                         completionHandler(nil)

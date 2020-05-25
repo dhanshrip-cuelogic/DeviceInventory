@@ -11,7 +11,8 @@ import UIKit
 class ChangePassword: CustomNavigationController, ChangePasswordProtocol {
     
     var errorTextFieldFromChangePasswordPage: UILabel?
-    
+    var reachability : Reachability?
+
     let changePasswordPresenter = ChangePasswordPresenter()
     
     @IBOutlet weak var circularImage: UIImageView!
@@ -23,17 +24,22 @@ class ChangePassword: CustomNavigationController, ChangePasswordProtocol {
         
         // Set Change Password Page as delegate to its Presenter.
         changePasswordPresenter.changePasswordDelegate = self
-        prepareForLoading()
+        self.reachability = try? Reachability.init()
+        
+        if self.reachability?.connection != Reachability.Connection.unavailable {
+            initUI()
+        } else {
+            showErrorAlert(title: "Not Connected", message: "Please check your internet connection.")
+        }
     }
     
-    func prepareForLoading() {
+    func initUI() {
        self.navigationItem.hidesBackButton = true
        navigationItem.title = "Change Password"
        navigationItem.leftBarButtonItem = backButton()
        circularImage.layer.masksToBounds = true
        circularImage.layer.cornerRadius = circularImage.bounds.width / 2
        changePasswordButton.layer.cornerRadius = 5.0
-       changePasswordNewPasswordTextField.addBottomBorder()
        errorLabel.alpha = 0
     }
     
@@ -58,4 +64,14 @@ class ChangePassword: CustomNavigationController, ChangePasswordProtocol {
         let platformSelectionPage = self.storyboard!.instantiateViewController(withIdentifier: "PlatformSelectionPage") as! PlatformSelectionPage
         self.navigationController?.pushViewController(platformSelectionPage, animated: false)
     }
+    
+    func showErrorAlert(title : String, message : String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let FailAction = UIAlertAction(title: "OK", style: .default) { (errorAction) in
+            self.viewDidLoad()
+        }
+        alert.addAction(FailAction)
+        present(alert, animated: true, completion: nil)
+    }
+    
 }

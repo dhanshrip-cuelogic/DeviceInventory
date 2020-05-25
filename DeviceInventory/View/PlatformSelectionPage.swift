@@ -23,10 +23,10 @@ class PlatformSelectionPage: CustomNavigationController, PlatformSelectionProtoc
         tableview.delegate = self
         tableview.dataSource = self
         platformSelectionPresenter.platformSelectionDelegate = self
-        prepareForLoading()
+        initUI()
     }
     
-    func prepareForLoading() {
+    func initUI() {
         navigationItem.title = "Platform Selection"
         self.navigationItem.hidesBackButton = true
         navigationItem.rightBarButtonItem = logoutButton()
@@ -74,7 +74,7 @@ extension PlatformSelectionPage : UITableViewDataSource {
 extension PlatformSelectionPage : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         if indexPath.row == 0 {
-            platform = .Android
+            platform = .android
             performTransitionToShowDeviceList()
         }
         else if indexPath.row == 1 {

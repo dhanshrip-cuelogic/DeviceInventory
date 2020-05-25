@@ -17,31 +17,31 @@ class CustomNavigationController: UIViewController {
     
     func backToHomeScreen() -> UIBarButtonItem{
         let barButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(backToHome))
-        barButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "OpenSans", size: 12)!], for: .normal)
+        barButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "OpenSans", size: 13)!], for: .normal)
         return barButton
     }
     
     func backButton() -> UIBarButtonItem {
         let barButton = UIBarButtonItem(title: "Back", style: .plain, target: self, action: #selector(popViewController))
-        barButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "OpenSans", size: 12)!], for: .normal)
+        barButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "OpenSans", size: 13)!], for: .normal)
         return barButton
     }
     
     func logoutButton() -> UIBarButtonItem {
         let barButton = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(logout))
-        barButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "OpenSans", size: 12)!], for: .normal)
+        barButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "OpenSans", size: 13)!], for: .normal)
         return barButton
     }
     
     func changePassword() -> UIBarButtonItem {
-        let barButton = UIBarButtonItem(title: "Change Password", style: .plain, target: self, action: #selector(redirectToChangePassword))
-        barButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "OpenSans", size: 12)!], for: .normal)
+        let barButton = UIBarButtonItem(title: "Edit Password", style: .plain, target: self, action: #selector(redirectToChangePassword))
+        barButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "OpenSans", size: 13)!], for: .normal)
         return barButton
     }
     
     func addButton(selector : Selector) -> UIBarButtonItem {
         let barButton = UIBarButtonItem(title: "Add", style: .plain, target: self, action: selector)
-        barButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "OpenSans", size: 12)!], for: .normal)
+        barButton.setTitleTextAttributes([NSAttributedString.Key.font : UIFont(name: "OpenSans", size: 13)!], for: .normal)
         return barButton
     }
     

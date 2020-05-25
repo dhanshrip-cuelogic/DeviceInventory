@@ -30,8 +30,8 @@ class DeviceListForEmployeePresenter {
             var availableList : [DeviceDetails]  = []
             var issuedList : [DeviceDetails] = []
             for device in sortedList! {
-                if device.Platform == self.deviceListDelegate?.platform!.rawValue {
-                    if device.Status == "Available" {
+                if device.platform == self.deviceListDelegate?.platform!.rawValue {
+                    if device.status == "Available" {
                         availableList.append(device)
                     }else {
                         issuedList.append(device)

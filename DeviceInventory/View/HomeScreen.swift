@@ -24,7 +24,7 @@ class HomeScreen: CustomNavigationController, HomeScreenProtocol {
         self.reachability = try? Reachability.init()
         
         if self.reachability?.connection != Reachability.Connection.unavailable {
-            showSuccessAlert()
+            initUI()
         } else {
             showErrorAlert(title: "Not Connected", message: "Please check your internet connection.")
         }
@@ -41,7 +41,7 @@ class HomeScreen: CustomNavigationController, HomeScreenProtocol {
         redirectToLogin()
     }
     
-    func prepareForLoadingPage() {
+    func initUI() {
         let def = UserDefaults.standard
         // return false if not found or stored value
         let is_authenticated = def.bool(forKey: "is_authenticated")
@@ -90,15 +90,6 @@ class HomeScreen: CustomNavigationController, HomeScreenProtocol {
             self.viewDidLoad()
         }
         alert.addAction(FailAction)
-        present(alert, animated: true, completion: nil)
-    }
-    
-    func showSuccessAlert() {
-        let alert = UIAlertController(title: "Connected", message: "network connected.", preferredStyle: .alert)
-        let SuccessAction = UIAlertAction(title: "OK", style: .default) { (action) in
-            self.prepareForLoadingPage()
-        }
-        alert.addAction(SuccessAction)
         present(alert, animated: true, completion: nil)
     }
     

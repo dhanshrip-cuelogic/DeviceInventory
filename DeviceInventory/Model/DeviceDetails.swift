@@ -9,9 +9,9 @@
 import Foundation
 
 struct DeviceDetails : Codable{
-    var DeviceID : String
-    var ModelName : String
-    var Platform : String
-    var OSVersion : String
-    var Status : String
+    var deviceID : String
+    var modelName : String
+    var platform : String
+    var oSVersion : String
+    var status : String
 }

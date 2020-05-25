@@ -10,11 +10,11 @@ import UIKit
 
 class DeviceHistoryCell: UITableViewCell {
     
-    @IBOutlet weak var CueIDLabel: UILabel!
-    @IBOutlet weak var NameLabel: UILabel!
-    @IBOutlet weak var DateLabel: UILabel!
-    @IBOutlet weak var CheckinLabel: UILabel!
-    @IBOutlet weak var CheckoutLabel: UILabel!
+    @IBOutlet weak var cueIDLabel: UILabel!
+    @IBOutlet weak var nameLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var checkinLabel: UILabel!
+    @IBOutlet weak var checkoutLabel: UILabel!
     
     override func awakeFromNib() {
         super.awakeFromNib()
