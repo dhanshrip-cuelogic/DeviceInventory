@@ -8,36 +8,41 @@
 
 import Foundation
 import FirebaseDatabase
+import Firebase
 
 protocol DeviceListForEmployeeProtocol {
-    var resultData : [DeviceDetails] { get set }
     var platform : Platform? {get set}
-    func setDevicesBasedOnStatus()
+    var availableDevices : [DeviceDetails] {get set}
+    var issuedDevices : [DeviceDetails] {get set}
+    var devicesToDisplay : [[DeviceDetails]] {get set}
+    func reloadTable()
+    func transitionToDisplayDevice(at index : IndexPath)
 }
 
 class DeviceListForEmployeePresenter {
     
     var deviceListDelegate : DeviceListForEmployeeProtocol?
-    var fetchedData = [DeviceDetails]()
-   
-    // Here we are creating reference of the database to fetch data from the table.
-    func databaseReference() {
-        DatabaseManager.dbManager.createReference()
-    }
+    var currentDeviceID : String?
     
     // Here we are passing this function to DeviceListForEmployee page to perform sorting based on status.
     func devicesBasedOnStatus() {
-        deviceListDelegate?.setDevicesBasedOnStatus()
+        DatabaseManager.shared.takeSnapshotOfDeviceTable { (sortedList) in
+            var availableList : [DeviceDetails]  = []
+            var issuedList : [DeviceDetails] = []
+            for device in sortedList! {
+                if device.platform == self.deviceListDelegate?.platform!.rawValue {
+                    if device.status == "Available" {
+                        availableList.append(device)
+                    }else {
+                        issuedList.append(device)
+                    }
+                }
+            }
+            self.deviceListDelegate?.availableDevices = availableList
+            self.deviceListDelegate?.issuedDevices = issuedList
+            
+            self.deviceListDelegate?.reloadTable()
+        }
     }
-    
-    // Here we are filtering and storing data according to the selected platform to work with it.
-    func SortByPlatform() -> [DeviceDetails]{
-           fetchedData = DatabaseManager.dbManager.fetchedData!
-           for device in fetchedData {
-            if device.Platform == deviceListDelegate!.platform!.rawValue {
-                   deviceListDelegate?.resultData.append(device)
-               }
-           }
-           return deviceListDelegate!.resultData
-       }
+   
 }

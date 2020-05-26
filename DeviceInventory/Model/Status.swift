@@ -9,6 +9,6 @@
 import Foundation
 
 enum DeviceStatus {
-    case Available
-    case Issued
+    case available
+    case issued
 }

@@ -12,8 +12,8 @@ import Foundation
  If the user is Admin then he can perform CRUD Operations on devices.
  If the user is Employee then he can only see details and issue device.
  */
- enum User {
-    case admin
-    case employee
+enum User : String {
+    case admin = "admin"
+    case employee = "employee"
 }
 

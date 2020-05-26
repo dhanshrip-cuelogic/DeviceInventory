@@ -9,75 +9,107 @@
 import UIKit
 import FirebaseDatabase
 
-class DeviceListForEmployee: UITableViewController, DeviceListForEmployeeProtocol {
+class DeviceListForEmployee: CustomNavigationController, DeviceListForEmployeeProtocol {
     
-    var resultData: [DeviceDetails] = []
+    @IBOutlet weak var tableview: UITableView!
+    
     let deviceListPresenter = DeviceListForEmployeePresenter()
     let sectionNames = ["Available","Issued"]
-    var availableDevices = [DeviceDetails]()
-    var issuedDevices = [DeviceDetails]()
-    var devicesToDisplay = [[DeviceDetails]]()
-    var sortedList : [DeviceDetails] = []
+    var availableDevices : [DeviceDetails] = []
+    var issuedDevices : [DeviceDetails] = []
+    var devicesToDisplay: [[DeviceDetails]] = []
     var platform : Platform?
+    var issuedUserCueID : String?
+    var currentUserCueID : String?
+    var currentUserName : String?
+    var user : User?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         deviceListPresenter.deviceListDelegate = self
-        deviceListPresenter.databaseReference()
-        deviceListPresenter.devicesBasedOnStatus()
-        devicesToDisplay = [availableDevices, issuedDevices]
-        
-        // It will send notification after reading data from firebase and it will call reloadtable() to perform action on this notification.
-        NotificationCenter.default.addObserver(self, selector: Selector(("reloadTable")), name: NSNotification.Name(rawValue: "loadedPost"), object: nil)
+        tableview.delegate = self
+        tableview.dataSource = self
+        initUI()
     }
     
-    // MARK: - Table view data source
+    func initUI() {
+        self.navigationItem.hidesBackButton = true
+        navigationItem.leftBarButtonItem = backButton()
+        navigationItem.rightBarButtonItem = logoutButton()
+        navigationItem.title = "Device List"
+        devicesToDisplay = [availableDevices, issuedDevices]
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        if availableDevices.count != 0 || issuedDevices.count != 0 {
+            availableDevices.removeAll()
+            issuedDevices.removeAll()
+        }
+        deviceListPresenter.devicesBasedOnStatus()
+    }
+    
+    func reloadTable() {
+        devicesToDisplay = [availableDevices, issuedDevices]
+        tableview.reloadData()
+    }
+    
+    func transitionToDisplayDevice(at index: IndexPath) {
+        let displayDetailsPage = self.storyboard!.instantiateViewController(withIdentifier: "redirectToDisplayDetailsPage") as! DisplayDetailsPage
+        displayDetailsPage.deviceID = devicesToDisplay[index.section][index.row].deviceID
+        displayDetailsPage.modelName =  devicesToDisplay[index.section][index.row].modelName
+        displayDetailsPage.platform =  devicesToDisplay[index.section][index.row].platform
+        displayDetailsPage.osVersion =  devicesToDisplay[index.section][index.row].oSVersion
+        displayDetailsPage.status = devicesToDisplay[index.section][index.row].status
+        displayDetailsPage.user = user
+        self.navigationController?.pushViewController(displayDetailsPage, animated: false)
+    }
+}
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
+extension DeviceListForEmployee : UITableViewDataSource{
+    
+    // MARK: - Table view data source
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 2
     }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return devicesToDisplay[section].count
     }
     
-    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return sectionNames[section]
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCell(withIdentifier: "CellForEmployee")
         if cell == nil {
-            cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
+            cell = UITableViewCell(style: .default, reuseIdentifier: "CellForEmployee")
         }
-        cell?.textLabel?.text = devicesToDisplay[indexPath.section][indexPath.row].ModelName
+        cell?.textLabel?.text = devicesToDisplay[indexPath.section][indexPath.row].modelName
         return cell!
     }
     
-    // Here we are sorting devices according to the status i.e., available or issued to display device in respective section.
-    func setDevicesBasedOnStatus() {
-        for device in sortedList {
-            let status = device.Status
-            if status == "Available" {
-            availableDevices.append(device)
-            }else {
-                issuedDevices.append(device)
-            }
-            devicesToDisplay = [availableDevices, issuedDevices]
-        }
-    }
     
-    // This is called after getting notification from DatabaseManager file.
-    @objc func reloadTable() {
-//        sortedList.removeAll()
-        sortedList = deviceListPresenter.SortByPlatform()
-        deviceListPresenter.devicesBasedOnStatus()
-        tableView.reloadData()
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 35.0
     }
-    
-    // Removing observer.
-    deinit {
-          NotificationCenter.default.removeObserver(self, name: NSNotification.Name(rawValue: "loadedPost"), object: self)
+
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+
+        let view = UIView()
+        view.backgroundColor = UIColor(red: CGFloat(0/255.0), green: CGFloat(180/255.0), blue: CGFloat(124/255.0), alpha: CGFloat(1.0))
+
+        let label = UILabel()
+        label.text = sectionNames[section]
+        label.frame = CGRect(x: 20, y: 1, width: 100, height: 35)
+        label.textColor = UIColor.white
+        view.addSubview(label)
+        return view
     }
+}
+
+extension DeviceListForEmployee : UITableViewDelegate{
     
+    // MARK: - Table view delegate
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // It will call a function from presenter to perform action on selected row.
+        transitionToDisplayDevice(at : indexPath)
+        
+    }
 }
