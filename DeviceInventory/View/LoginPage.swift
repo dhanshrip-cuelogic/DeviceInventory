@@ -34,11 +34,13 @@ class LoginPage: CustomNavigationController, LoginPageProtocol {
     @IBOutlet weak var errorTextField: UILabel!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpPage: UIButton!
+    @IBOutlet weak var accountLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         loginPresenter.loginDelegate = self
+        
+        // Checking network connectivity.
         self.reachability = try? Reachability.init()
         
         if self.reachability?.connection != Reachability.Connection.unavailable {
@@ -49,6 +51,12 @@ class LoginPage: CustomNavigationController, LoginPageProtocol {
     }
     
     func initUI() {
+        
+        if user == User.admin {
+            accountLabel.isHidden = true
+            signUpPage.isHidden = true
+        }
+        
         self.navigationItem.hidesBackButton = true
         navigationItem.title = "Login"
         navigationItem.leftBarButtonItem = backToHomeScreen()

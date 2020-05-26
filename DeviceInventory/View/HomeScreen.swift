@@ -54,7 +54,7 @@ class HomeScreen: CustomNavigationController, HomeScreenProtocol {
             Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
                 if error != nil {
                     // If there is an error while signing in the user then it will display the error on the screen.
-                    self.showErrorAlert(title: "Error in SignIn", message: "Cannot login with existing credentials.")
+                    self.showErrorAlert(title: "Error in SignIn", message: error!.localizedDescription)
                 }else {
                     // If there is no error the signing in will be successfull and it will transit to Platform selection page.
                     let platformPage = self.storyboard!.instantiateViewController(withIdentifier: "PlatformSelectionPage") as! PlatformSelectionPage

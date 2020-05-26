@@ -215,13 +215,13 @@ class DatabaseManager {
         }
     }
     
-    func createNewUser(cueID : String, email : String, username : String) {
+    func createNewUser(cueID : String, email : String, username : String, completionHandler : @escaping (Bool)-> ()) {
         ref.child("EmployeeTable").child(cueID).setValue(["cueID" : cueID, "email" : email, "username" : username]) {
             (error:Error?, ref:DatabaseReference) in
             if error != nil {
-                self.successful = false
+                completionHandler(false)
             } else {
-                self.successful = true
+                completionHandler(true)
             }
         }
     }

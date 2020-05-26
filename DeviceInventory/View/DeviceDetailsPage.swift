@@ -16,6 +16,7 @@ class DeviceDetailsPage: CustomNavigationController, DeviceDetailsProtocol {
     @IBOutlet weak var oSVersionTextfield: UITextField!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var saveButton: UIButton!
+    
     @IBOutlet weak var currentDeviceButton: UIButton!
     
     var errorText : UILabel?
@@ -40,10 +41,10 @@ class DeviceDetailsPage: CustomNavigationController, DeviceDetailsProtocol {
         navigationItem.title = "Device Details"
         errorLabel.alpha = 0
         saveButton.layer.cornerRadius = 5.0
-        deviceIDTextField.addBottomBorder()
-        modelNameTextField.addBottomBorder()
-        platformTextField.addBottomBorder()
-        oSVersionTextfield.addBottomBorder()
+//        deviceIDTextField.addBottomBorder()
+//        modelNameTextField.addBottomBorder()
+//        platformTextField.addBottomBorder()
+//        oSVersionTextfield.addBottomBorder()
         
         // This button works temporarily for adding iOS devices only, otherwise it will be hidden.
         if platform != "iOS" {
