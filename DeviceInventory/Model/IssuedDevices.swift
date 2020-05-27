@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct IssuedDevices : Codable {
+@objcMembers class IssuedDevices : NSObject, Codable {
     var cueID : String
     var name : String
     var deviceID : String

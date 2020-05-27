@@ -36,7 +36,6 @@ class SignUpPage: CustomNavigationController, SignUpProtocol {
        } else {
            showErrorAlert(title: "Not Connected", message: "Please check your internet connection.")
        }
-        
     }
     
     func initUI() {

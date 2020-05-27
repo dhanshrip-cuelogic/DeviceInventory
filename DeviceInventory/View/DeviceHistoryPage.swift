@@ -23,7 +23,6 @@ class DeviceHistoryPage: UITableViewController, DeviceHistoryProtocol {
         super.viewDidLoad()
         deviceHistoryPresenter.deviceHistoryDelegate = self
         initUI()
-        
     }
     
     func initUI() {
@@ -40,9 +39,10 @@ class DeviceHistoryPage: UITableViewController, DeviceHistoryProtocol {
     
     // This function will call presenter to get data according to the selected platform and reload data.
     func reloadTable() {
+        issuedDevices = issuedDevices.sorted(by: {$0.date > $1.date})
         tableView.reloadData()
     }
-    
+        
     func getDateAndTime() -> (toDate : TimeInterval, fromDate : TimeInterval) {
         let from = fromDate.date
         let to = toDate.date

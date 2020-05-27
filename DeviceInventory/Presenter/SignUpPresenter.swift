@@ -41,17 +41,19 @@ class SignUpPresenter {
             // create user with the email, CueID and Password.
             Auth.auth().createUser(withEmail: email, password: password) { (result, err) in
                 if err != nil {
-                    self.showError("Error while creating user.")
+                    print(err!.localizedDescription)
+//                    self.showError(err!.localizedDescription)
                 }else {
                     // If user has created account successfully then the CueID will get saved into database.
-                    DatabaseManager.shared.createNewUser(cueID: cueid, email: email, username: name)
-                    if DatabaseManager.shared.successful == true {
-                        print("sign up successfull !!!!!")
-                        // After having successful SignUp it will transit to Login page for SignIn.
-                        self.signUpDelegate?.redirect()
-                    }else {
-                        self.showError("Could not be able to save CueID")
+                    DatabaseManager.shared.createNewUser(cueID: cueid, email: email, username: name) { successful in
+                        if successful == true {
+                            // After having successful SignUp it will transit to Login page for SignIn.
+                            self.signUpDelegate?.redirect()
+                        }else {
+                            self.showError("Could not be able to save CueID")
+                        }
                     }
+                    
                 }
             }
         }
