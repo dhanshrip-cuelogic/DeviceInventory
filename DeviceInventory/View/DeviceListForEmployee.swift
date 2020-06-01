@@ -41,6 +41,7 @@ class DeviceListForEmployee: CustomNavigationController, DeviceListForEmployeePr
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        showSpinner(onView: self.view)
         if availableDevices.count != 0 || issuedDevices.count != 0 {
             availableDevices.removeAll()
             issuedDevices.removeAll()
@@ -49,6 +50,7 @@ class DeviceListForEmployee: CustomNavigationController, DeviceListForEmployeePr
     }
     
     func reloadTable() {
+        removeSpinner()
         devicesToDisplay = [availableDevices, issuedDevices]
         tableview.reloadData()
     }

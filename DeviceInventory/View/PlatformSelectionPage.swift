@@ -30,7 +30,6 @@ class PlatformSelectionPage: CustomNavigationController, PlatformSelectionProtoc
         navigationItem.title = "Platform Selection"
         self.navigationItem.hidesBackButton = true
         navigationItem.rightBarButtonItem = logoutButton()
-        navigationItem.leftBarButtonItem = changePassword()
     }
     
     func performTransitionToShowDeviceList() {

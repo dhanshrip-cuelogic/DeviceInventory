@@ -37,9 +37,15 @@ class DeviceHistoryPage: UITableViewController, DeviceHistoryProtocol {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        showSpinner(onView: self.view)
+    }
+    
     // This function will call presenter to get data according to the selected platform and reload data.
     func reloadTable() {
+        removeSpinner()
         issuedDevices = issuedDevices.sorted(by: {$0.date > $1.date})
+//        issuedDevices = issuedDevices.sorted(by: {$0.date != $1.date})
         tableView.reloadData()
     }
         

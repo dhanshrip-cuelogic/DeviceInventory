@@ -41,6 +41,8 @@ class DeviceDetailsPage: CustomNavigationController, DeviceDetailsProtocol {
         navigationItem.title = "Device Details"
         errorLabel.alpha = 0
         saveButton.layer.cornerRadius = 5.0
+        platformTextField.text = platform
+        platformTextField.isEnabled = false
 //        deviceIDTextField.addBottomBorder()
 //        modelNameTextField.addBottomBorder()
 //        platformTextField.addBottomBorder()
@@ -58,10 +60,12 @@ class DeviceDetailsPage: CustomNavigationController, DeviceDetailsProtocol {
         if performEditing == true {
             deviceIDTextField.text = deviceID
             modelNameTextField.text = modelName
-            platformTextField.text = platform
+//            platformTextField.text = platform
             oSVersionTextfield.text = osVersion
         }
     }
+    
+    
     
     //This will call saveButtonClicked method from presenter to add new device data into database.
     @IBAction func SaveButton(_ sender: UIButton) {

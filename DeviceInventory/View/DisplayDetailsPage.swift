@@ -60,12 +60,14 @@ class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MF
     
         if user == User.employee {
             displayPresenter.getCurrentUser { (userID, userName) in
+                guard let userID = userID else { return }
                    self.currentUserCueID = userID
                    self.currentUserName = userName
                    self.setActionButton()
             }
             
             displayPresenter.getIssuedUser { (issuedBy) in
+                guard let issuedBy = issuedBy else { return }
                    self.issuedUserCueID = issuedBy
                    self.setActionButton()
             }
@@ -73,6 +75,13 @@ class DisplayDetailsPage: CustomNavigationController, DisplayDeviceProtocol , MF
             checkinButtonLabel.isHidden = true
             checkoutButtonLabel.isHidden = true
             issuedButtonLabel.isHidden = true
+        }
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        showSpinner(onView: self.view)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.removeSpinner()
         }
     }
     

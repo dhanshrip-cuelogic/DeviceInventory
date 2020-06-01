@@ -15,6 +15,7 @@ class SignUpPage: CustomNavigationController, SignUpProtocol {
     var errorTextFieldOfSignUpPage: UILabel?
     let signUpPresenter = SignUpPresenter()
     var reachability : Reachability?
+    var user : User?
 
 
     @IBOutlet weak var signUpEmailTextField: UITextField!
@@ -42,12 +43,20 @@ class SignUpPage: CustomNavigationController, SignUpProtocol {
         // To add bottom layer for textfields and set borders for buttons.
         self.navigationItem.hidesBackButton = true
         navigationItem.title = "SignUp"
+        
+//        signUpEmailTextField.addBottomBorder()
+//        signUpCueIdTextField.addBottomBorder()
+//        signUpUsernameTextField.addBottomBorder()
+//        signUpPasswordTextField.addBottomBorder()
+        
         errorTextField.alpha = 0
         signUpButton.layer.cornerRadius = 20.0
         circularImage.layer.masksToBounds = true
         circularImage.layer.cornerRadius = circularImage.bounds.width / 2
         signUpButton.layer.cornerRadius = 5.0
         loginButton.layer.cornerRadius = 5.0
+        
+        
         
     }
     
@@ -68,6 +77,7 @@ class SignUpPage: CustomNavigationController, SignUpProtocol {
     
     func redirect() {
         let loginpage = self.storyboard!.instantiateViewController(withIdentifier: "Loginpage") as! LoginPage
+        loginpage.user = user
         self.navigationController?.pushViewController(loginpage, animated: false)
     }
     

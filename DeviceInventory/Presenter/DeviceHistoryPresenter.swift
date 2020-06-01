@@ -20,19 +20,21 @@ class DeviceHistoryPresenter {
     var deviceHistoryDelegate : DeviceHistoryProtocol?
     var sortedData : [IssuedDevices] = []
     
-    func sortByDeviceID(id : String, fromDate : TimeInterval, toDate : TimeInterval, fetch : Bool){
+    func sortByDeviceID(id : String, fromDate : TimeInterval, toDate : TimeInterval, fetch : Bool) {
         DatabaseManager.shared.takeSnapshotForDeviceHistory(of: id, fromDate : fromDate, toDate: toDate, fetchingAgain: fetch, completionHandler: { (issuedData) in
             
-                    let orderedArray = issuedData! as NSArray
-                    let fromPredicate = NSPredicate(format: "date >= %d", fromDate)
-                    let toPredicate = NSPredicate(format: "date < %d", toDate)
-                    let predicateRule = NSCompoundPredicate(orPredicateWithSubpredicates: [fromPredicate , toPredicate])
-                    let filteredData = orderedArray.filtered(using: predicateRule)
-        
-                    for device in filteredData {
-                        self.deviceHistoryDelegate?.issuedDevices.append(device as! IssuedDevices)
-                    }
-                    self.deviceHistoryDelegate?.reloadTable()
+            guard let issuedData = issuedData else { return }
+           
+            let orderedArray = issuedData as NSArray
+                let fromPredicate = NSPredicate(format: "date >= %d", fromDate)
+                let toPredicate = NSPredicate(format: "date < %d", toDate)
+                let predicateRule = NSCompoundPredicate(orPredicateWithSubpredicates: [fromPredicate , toPredicate])
+                let filteredData = orderedArray.filtered(using: predicateRule)
+    
+                for device in filteredData {
+                    self.deviceHistoryDelegate?.issuedDevices.append(device as! IssuedDevices)
+                }
+                self.deviceHistoryDelegate?.reloadTable()
         })
     }    
 }

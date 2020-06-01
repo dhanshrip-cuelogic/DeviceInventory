@@ -23,6 +23,7 @@
 		99461A4C245A06B100E32B14 /* PlatformSelectionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99461A4B245A06B100E32B14 /* PlatformSelectionPresenter.swift */; };
 		9949A3CE247153D50050C51F /* Reachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9949A3CD247153D50050C51F /* Reachability.swift */; };
 		995C189A2469EBC300FA99D6 /* CustomNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995C18992469EBC300FA99D6 /* CustomNavigationController.swift */; };
+		995CE952247FF77400E4DA98 /* Admin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 995CE951247FF77400E4DA98 /* Admin.swift */; };
 		9960064824799A2600B89B51 /* OpenSans-Semibold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9960064624799A2500B89B51 /* OpenSans-Semibold.ttf */; };
 		9960064924799A2600B89B51 /* OpenSans-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9960064724799A2600B89B51 /* OpenSans-Regular.ttf */; };
 		9961DAA42456D08E00723633 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DAA32456D08E00723633 /* AppDelegate.swift */; };
@@ -33,6 +34,7 @@
 		9961DAB02456D09500723633 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9961DAAE2456D09500723633 /* LaunchScreen.storyboard */; };
 		9961DAB82456DA7B00723633 /* HomeScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DAB72456DA7B00723633 /* HomeScreen.swift */; };
 		9961DABA2456E6A100723633 /* LoginPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9961DAB92456E6A100723633 /* LoginPage.swift */; };
+		99635A0C247E7C960066C343 /* ResetPassword.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99635A0B247E7C960066C343 /* ResetPassword.swift */; };
 		99660D90245AE30F006F4EE2 /* DeviceListForEmployee.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99660D8F245AE30F006F4EE2 /* DeviceListForEmployee.swift */; };
 		99660D92245AF150006F4EE2 /* DeviceListForEmployeePresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99660D91245AF150006F4EE2 /* DeviceListForEmployeePresenter.swift */; };
 		9966B7472460086700D96B95 /* DeviceListForAdmin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9966B7462460086700D96B95 /* DeviceListForAdmin.swift */; };
@@ -71,6 +73,7 @@
 		99461A4B245A06B100E32B14 /* PlatformSelectionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlatformSelectionPresenter.swift; sourceTree = "<group>"; };
 		9949A3CD247153D50050C51F /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		995C18992469EBC300FA99D6 /* CustomNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomNavigationController.swift; sourceTree = "<group>"; };
+		995CE951247FF77400E4DA98 /* Admin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Admin.swift; sourceTree = "<group>"; };
 		9960064624799A2500B89B51 /* OpenSans-Semibold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Semibold.ttf"; sourceTree = "<group>"; };
 		9960064724799A2600B89B51 /* OpenSans-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "OpenSans-Regular.ttf"; sourceTree = "<group>"; };
 		9961DAA02456D08E00723633 /* DeviceInventory.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DeviceInventory.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +86,7 @@
 		9961DAB12456D09500723633 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9961DAB72456DA7B00723633 /* HomeScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeScreen.swift; sourceTree = "<group>"; };
 		9961DAB92456E6A100723633 /* LoginPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPage.swift; sourceTree = "<group>"; };
+		99635A0B247E7C960066C343 /* ResetPassword.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPassword.swift; sourceTree = "<group>"; };
 		99660D8F245AE30F006F4EE2 /* DeviceListForEmployee.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListForEmployee.swift; sourceTree = "<group>"; };
 		99660D91245AF150006F4EE2 /* DeviceListForEmployeePresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListForEmployeePresenter.swift; sourceTree = "<group>"; };
 		9966B7462460086700D96B95 /* DeviceListForAdmin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceListForAdmin.swift; sourceTree = "<group>"; };
@@ -185,6 +189,7 @@
 				995C18992469EBC300FA99D6 /* CustomNavigationController.swift */,
 				9961DAB72456DA7B00723633 /* HomeScreen.swift */,
 				9961DAB92456E6A100723633 /* LoginPage.swift */,
+				99635A0B247E7C960066C343 /* ResetPassword.swift */,
 				99D041132458302900CC0AD0 /* SignUpPage.swift */,
 				998A6F8C2459977900624C3D /* ChangePassword.swift */,
 				99461A49245A03C500E32B14 /* PlatformSelectionPage.swift */,
@@ -227,6 +232,7 @@
 				9966B74A2460236800D96B95 /* Platform.swift */,
 				9925658C24632B0600F7EA20 /* IssuedDevices.swift */,
 				9982B4A32466B02A007B9561 /* Employee.swift */,
+				995CE951247FF77400E4DA98 /* Admin.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -362,6 +368,7 @@
 			files = (
 				995C189A2469EBC300FA99D6 /* CustomNavigationController.swift in Sources */,
 				9925658F24632CC400F7EA20 /* DeviceHistoryPresenter.swift in Sources */,
+				99635A0C247E7C960066C343 /* ResetPassword.swift in Sources */,
 				9961DAB82456DA7B00723633 /* HomeScreen.swift in Sources */,
 				999C781124571438005DA8DB /* HomeScreenPresenter.swift in Sources */,
 				9925657F2462E6BF00F7EA20 /* DisplayDetailsPage.swift in Sources */,
@@ -378,6 +385,7 @@
 				999C781624571D05005DA8DB /* User.swift in Sources */,
 				99660D90245AE30F006F4EE2 /* DeviceListForEmployee.swift in Sources */,
 				999C781324571CA9005DA8DB /* LoginPesenter.swift in Sources */,
+				995CE952247FF77400E4DA98 /* Admin.swift in Sources */,
 				99461A4A245A03C500E32B14 /* PlatformSelectionPage.swift in Sources */,
 				9961DABA2456E6A100723633 /* LoginPage.swift in Sources */,
 				99660D92245AF150006F4EE2 /* DeviceListForEmployeePresenter.swift in Sources */,

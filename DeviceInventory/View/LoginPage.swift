@@ -9,16 +9,6 @@
 import UIKit
 import Firebase
 
-extension UITextField {
-    func addBottomBorder(){
-        let bottomLine = CALayer()
-        bottomLine.frame = CGRect(x: 0, y: self.frame.size.height - 1, width: self.frame.size.width, height: 1)
-        bottomLine.backgroundColor = UIColor.black.cgColor
-        borderStyle = .none
-        layer.addSublayer(bottomLine)
-    }
-}
-
 class LoginPage: CustomNavigationController, LoginPageProtocol {
     
     var errorTextFieldOfLoginPage : UILabel?
@@ -35,6 +25,7 @@ class LoginPage: CustomNavigationController, LoginPageProtocol {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signUpPage: UIButton!
     @IBOutlet weak var accountLabel: UILabel!
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +46,8 @@ class LoginPage: CustomNavigationController, LoginPageProtocol {
         if user == User.admin {
             accountLabel.isHidden = true
             signUpPage.isHidden = true
+            showSpinner(onView: self.view)
+            loginPresenter.fetchAdminDetails()
         }
         
         self.navigationItem.hidesBackButton = true
@@ -62,7 +55,8 @@ class LoginPage: CustomNavigationController, LoginPageProtocol {
         navigationItem.leftBarButtonItem = backToHomeScreen()
         
         // To set radius to the borders of button and Set this login page as delegate of its presenter.
-
+        emailTextField.addBottomBorder()
+        passwordTextField.addBottomBorder()
         circularImage.layer.masksToBounds = true
         circularImage.layer.cornerRadius = circularImage.bounds.width / 2
         errorTextField.alpha = 0
@@ -70,8 +64,17 @@ class LoginPage: CustomNavigationController, LoginPageProtocol {
         signUpPage.layer.cornerRadius = 5.0
     }
     
+    func loadSpinner() {
+        self.showSpinner(onView: self.view)
+    }
+    
+    func hideSpinner() {
+        self.removeSpinner()
+    }
+    
     @IBAction func redirectToSignUpButtonClicked(_ sender: UIButton) {
         let signupPage = self.storyboard!.instantiateViewController(withIdentifier: "SignUpPage") as! SignUpPage
+        signupPage.user = user
         self.navigationController?.pushViewController(signupPage, animated: false)
     }
     
@@ -81,6 +84,13 @@ class LoginPage: CustomNavigationController, LoginPageProtocol {
         loginPresenter.passwordTextFromLoginPage = passwordTextField.text!
         errorTextFieldOfLoginPage = errorTextField
         loginPresenter.whenLoginButtonIsClicked()
+    }
+    
+    
+    @IBAction func forgotPassword(_ sender: UIButton) {
+        let resetPasswordPage = self.storyboard?.instantiateViewController(withIdentifier: "resetPassword") as! ResetPassword
+        resetPasswordPage.user = user
+        self.navigationController?.pushViewController(resetPasswordPage, animated: false)
     }
     
     // Function to perform redirection on successfull SignIn from Login Page to Platform Selection page.
