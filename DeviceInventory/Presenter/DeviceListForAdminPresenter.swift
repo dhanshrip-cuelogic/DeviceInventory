@@ -15,7 +15,7 @@ protocol DeviceListForAdminProtocol {
     var platform : Platform? {get set}
     var sortedList : [DeviceDetails] {get set}
     func showAlert()
-    func showErrorAlert()
+    func showErrorAlert(title: String, message: String)
     func reloadTable()
     
 }
@@ -41,11 +41,13 @@ class DeviceListForAdminPresenter {
     // It will take the deviceId as argument and call delete function from DatabaseManager.
     func deleteData(at index : IndexPath) {
         guard let id = deviceListDelegate?.sortedList[index.row].deviceID else { return }
-        DatabaseManager.shared.deleteFromDatabase(with: id)
-        if DatabaseManager.shared.successful == true {
-            deviceListDelegate?.showAlert()
-        }else {
-            deviceListDelegate?.showErrorAlert()
+        DatabaseManager.shared.deleteFromDatabase(with: id) { successful, error in
+            if successful == true {
+                self.deviceListDelegate?.showAlert()
+            }else {
+                self.deviceListDelegate?.showErrorAlert(title: "Failed", message: error!)
+            }
         }
+        
     }
 }

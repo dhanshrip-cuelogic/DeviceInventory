@@ -26,15 +26,17 @@ class DisplayDevicePresenter {
     
     func whenCheckinButtonIsClicked(childID : String, cueID : String,name : String, deviceID : String, date : Date, checkin : String) {
         // This will call a method from DatabaseManager to save the checkin time with deviceID for logged in user.
-        DatabaseManager.shared.addNewCheckIn(childID : childID, cueID: cueID, name : name, deviceID: deviceID, date: date, checkin: checkin)
-        if DatabaseManager.shared.successful == true {
-            // Change the status of that device in DeviceTable as well.
-            DatabaseManager.shared.updateDeviceStatusAfterCheckin(of: deviceID)
-            displayDelegate?.showAlert()
-        }else {
-            DatabaseManager.shared.deleteFromIssuedTable(with: childID)
-            displayDelegate?.showErrorAlert(title: "Failed", message: "Failed to Checkin Device.")
+        DatabaseManager.shared.addNewCheckIn(childID : childID, cueID: cueID, name : name, deviceID: deviceID, date: date, checkin: checkin) { successful, error in
+                if successful == true {
+                    // Change the status of that device in DeviceTable as well.
+                    DatabaseManager.shared.updateDeviceStatusAfterCheckin(of: deviceID)
+                    self.displayDelegate?.showAlert()
+                }else {
+                    DatabaseManager.shared.deleteFromIssuedTable(with: childID)
+                    self.displayDelegate?.showErrorAlert(title: "Failed", message: error!)
+                }
         }
+        
     }
     
     func whenCheckoutButtonIsClicked(deviceID : String, checkout : String) {
@@ -55,23 +57,25 @@ class DisplayDevicePresenter {
             guard let device = checkedinDeviceDetails else { return }
             //            let childid = self.getChildID(date: device.Date)
             
-            DatabaseManager.shared.addCheckOut(childID: self.childid, cueID: device.cueID, name: device.name, deviceID: deviceID, date: device.date, checkin: device.checkin, checkout: checkout)
-            
-            if DatabaseManager.shared.successful == true {
-                // Change the status of that device in DeviceTable as well.
-                DatabaseManager.shared.updateDeviceStatusAfterCheckout(of: deviceID)
-                self.displayDelegate?.showAlertAfterCheckout()
-            }else {
-                self.displayDelegate?.showErrorAlert(title: "Failed", message: "Failed to Checkout Device.")
+            DatabaseManager.shared.addCheckOut(childID: self.childid, cueID: device.cueID, name: device.name, deviceID: deviceID, date: device.date, checkin: device.checkin, checkout: checkout) { successful, error in
+                    if successful == true {
+                        // Change the status of that device in DeviceTable as well.
+                        DatabaseManager.shared.updateDeviceStatusAfterCheckout(of: deviceID)
+                        self.displayDelegate?.showAlertAfterCheckout()
+                    }else {
+                        self.displayDelegate?.showErrorAlert(title: "Failed", message: error!)
+                    }
             }
+            
+            
         }
     }
     
     func getCurrentUser(completionHandler : @escaping (String?,String?)->()) {
         // This will call a method from DatabaseManager to save checkout time of that device.
         let user = Auth.auth().currentUser
-        var userID : String = ""
-        var userName : String = ""
+        var userID : String?
+        var userName : String?
         DatabaseManager.shared.takeSnapshotOfEmployeeDetails { (employeeDetails) in
 
             for employee in employeeDetails! {

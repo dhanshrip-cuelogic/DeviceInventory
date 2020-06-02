@@ -37,19 +37,22 @@ class DeviceDetailsPresenter {
             guard let os = osVersion else { return }
             if performEditing == true {
                 guard let status = status else { return }
-                DatabaseManager.shared.updateDatabase(with: deviceid, modelName: modelname, platform: platform, osVersion: os, status : status)
-                if DatabaseManager.shared.successful == true {
-                    deviceDetailDelegate?.showAlert()
-                }else {
-                    showError("Could not update device data.")
+                DatabaseManager.shared.updateDatabase(with: deviceid, modelName: modelname, platform: platform, osVersion: os, status : status) { successful, error in
+                    if successful == true {
+                        self.deviceDetailDelegate?.showAlert()
+                    }else {
+                        self.showError(error!)
+                    }
                 }
             } else {
-                DatabaseManager.shared.addNewDevice(deviceID: deviceid, modelName: modelname, platform: platform, osVersion: os)
-                if DatabaseManager.shared.successful == true {
-                    deviceDetailDelegate?.showAlert()
-                }else {
-                    showError("Could not save new device data.")
+                DatabaseManager.shared.addNewDevice(deviceID: deviceid, modelName: modelname, platform: platform, osVersion: os) { successful, error in
+                    if successful == true {
+                        self.deviceDetailDelegate?.showAlert()
+                    }else {
+                        self.showError(error!)
+                    }
                 }
+                
             }
         }
         

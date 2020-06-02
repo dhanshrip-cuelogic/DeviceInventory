@@ -47,6 +47,7 @@ class HomeScreen: CustomNavigationController, HomeScreenProtocol {
         let is_authenticated = def.bool(forKey: "is_authenticated")
         
         if is_authenticated {
+            showSpinner(onView: self.view)
             guard let email = def.string(forKey: "withEmail") else { return }
             guard let password = def.string(forKey: "withPassword") else { return }
             guard let user = def.string(forKey: "forUser") else { return }
@@ -56,6 +57,7 @@ class HomeScreen: CustomNavigationController, HomeScreenProtocol {
                     // If there is an error while signing in the user then it will display the error on the screen.
                     self.showErrorAlert(title: "Error in SignIn", message: error!.localizedDescription)
                 }else {
+                    self.removeSpinner()
                     // If there is no error the signing in will be successfull and it will transit to Platform selection page.
                     let platformPage = self.storyboard!.instantiateViewController(withIdentifier: "PlatformSelectionPage") as! PlatformSelectionPage
                     if user == "admin" {
@@ -75,6 +77,10 @@ class HomeScreen: CustomNavigationController, HomeScreenProtocol {
         
         // To set HomeScreen as delegate to HomeScreenProtocol
         homeScreenPresenter.homeScreenDelegate = self
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        
     }
     
     // When user is selected it will send the user value to further viewcontrollers to show relevent data accordingly.

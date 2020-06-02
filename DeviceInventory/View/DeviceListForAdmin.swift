@@ -38,6 +38,7 @@ class DeviceListForAdmin: CustomNavigationController, DeviceListForAdminProtocol
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        showSpinner(onView: self.view)
         performEdit = false
         if sortedList.count != 0 {
             sortedList.removeAll()
@@ -45,13 +46,10 @@ class DeviceListForAdmin: CustomNavigationController, DeviceListForAdminProtocol
         deviceListPresenter.sortByPlatform()
 
     }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        reloadTable()
-    }
         
     // This function will call presenter to get data according to the selected platform and reload data.
     func reloadTable() {
+        removeSpinner()
         tableview.reloadData()
     }
     
@@ -70,6 +68,8 @@ class DeviceListForAdmin: CustomNavigationController, DeviceListForAdminProtocol
         } else {
             if platform == Platform.iOS {
                 deviceDetailPage.platform = "iOS"
+            } else {
+                deviceDetailPage.platform = "Android"
             }
         }
         self.navigationController?.pushViewController(deviceDetailPage, animated: false)
@@ -98,8 +98,8 @@ class DeviceListForAdmin: CustomNavigationController, DeviceListForAdminProtocol
     }
     
     // If it fails to perform the operation it will sow an alert regarding the same.
-    func showErrorAlert() {
-        let alert = UIAlertController(title: "Failed", message: "Failed to perform operation", preferredStyle: .alert)
+    func showErrorAlert(title : String, message : String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let FailAction = UIAlertAction(title: "OK", style: .default) { (errorAction) in
             self.viewWillAppear(true)
         }

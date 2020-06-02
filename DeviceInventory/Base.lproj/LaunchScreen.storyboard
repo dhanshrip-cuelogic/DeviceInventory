@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -15,16 +16,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="spash6" translatesAutoresizingMaskIntoConstraints="NO" id="Opq-vR-2Sc">
-                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="cuelogo3" translatesAutoresizingMaskIntoConstraints="NO" id="iWT-Uh-0Im">
+                                <rect key="frame" x="83" y="371" width="248" height="164"/>
                             </imageView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" red="0.019607843140000001" green="0.32156862749999998" blue="0.70196078429999997" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Opq-vR-2Sc" secondAttribute="trailing" id="5FQ-dq-FQb"/>
-                            <constraint firstItem="Opq-vR-2Sc" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="FGE-LM-0Iv"/>
-                            <constraint firstItem="Opq-vR-2Sc" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="N8r-mb-ZVK"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Opq-vR-2Sc" secondAttribute="bottom" id="wrg-tM-aHe"/>
+                            <constraint firstItem="iWT-Uh-0Im" firstAttribute="height" secondItem="6Tk-OE-BBY" secondAttribute="height" multiplier="0.2" id="5Dl-vB-bhV"/>
+                            <constraint firstItem="iWT-Uh-0Im" firstAttribute="width" secondItem="6Tk-OE-BBY" secondAttribute="width" multiplier="0.6" id="6oT-LM-LKd"/>
+                            <constraint firstItem="iWT-Uh-0Im" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Isf-qa-mct"/>
+                            <constraint firstItem="iWT-Uh-0Im" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="fz6-WL-Y7V"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -35,6 +36,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="spash6" width="1500" height="1000"/>
+        <image name="cuelogo3" width="400" height="200"/>
     </resources>
 </document>

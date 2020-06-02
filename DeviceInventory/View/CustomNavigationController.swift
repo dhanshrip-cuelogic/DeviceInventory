@@ -70,3 +70,42 @@ extension CustomNavigationController {
     }
     
 }
+
+var vSpinner : UIView?
+extension UIViewController {
+    func showSpinner(onView : UIView) {
+        let spinnerView = UIView.init(frame: onView.bounds)
+        spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let ai = UIActivityIndicatorView.init(style: .whiteLarge)
+        ai.startAnimating()
+        ai.center = spinnerView.center
+        
+        DispatchQueue.main.async {
+            spinnerView.addSubview(ai)
+            onView.addSubview(spinnerView)
+        }
+        
+        vSpinner = spinnerView
+    }
+    
+    func removeSpinner() {
+        DispatchQueue.main.async {
+            vSpinner?.removeFromSuperview()
+            vSpinner = nil
+        }
+    }
+}
+
+extension UITextField {
+    func addBottomBorder() {
+        self.borderStyle = .none
+        let border = CALayer()
+        let width = CGFloat(1.0)
+        border.borderColor = UIColor.black.cgColor
+        border.frame = CGRect(x: 0, y: self.frame.size.height - width, width:  self.frame.size.width, height: self.frame.size.height)
+        border.borderWidth = width
+        self.layer.addSublayer(border)
+        self.layer.masksToBounds = true
+    }
+}
+

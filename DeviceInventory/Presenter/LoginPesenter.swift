@@ -12,6 +12,8 @@ import Firebase
 protocol LoginPageProtocol {
     var errorTextFieldOfLoginPage : UILabel? { get set }
     var user : User? {get set}
+    func loadSpinner()
+    func hideSpinner()
     func transtionToPlatformSelection()
 }
 
@@ -20,9 +22,7 @@ class LoginPresenter {
     var loginDelegate : LoginPageProtocol?
     var emailTextFromLoginPage : String?
     var passwordTextFromLoginPage : String?
-    
-    init() {
-    }
+    var adminData : [Admin]?
     
     // When login button is clicked it will validate the credentials and will transit to Platform Selection Page.
     func whenLoginButtonIsClicked() {
@@ -35,17 +35,53 @@ class LoginPresenter {
             guard let email = emailTextFromLoginPage?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
             guard let password = passwordTextFromLoginPage?.trimmingCharacters(in: .whitespacesAndNewlines) else { return }
             
-            // sign in with provided email and password
-            Auth.auth().signIn(withEmail: email, password: password) { (result, error) in
-                if error != nil {
-                    // If there is an error while signing in the user then it will display the error on the screen.
-                    self.showError("error while sign in user.")
-                }else {
-                    
-                    self.saveLoggedState(email: email, password: password)
-                    // If there is no error the signing in will be successfull and it will transit to Platform selection page.
-                    self.loginDelegate?.transtionToPlatformSelection()
+            if loginDelegate?.user == User.admin {
+                guard let adminData = adminData else { return }
+                var adminFound : Bool = false
+                for user in adminData {
+                    if user.email == email {
+                        adminFound = true
+                        self.showError("")
+                        loginDelegate?.loadSpinner()
+                        DatabaseManager.shared.signInUser(email: email, password: password) { (successful, error) in
+                            if successful == true {
+                                // If there is no error the signing in will be successfull and it will transit to Platform selection page.
+                                self.loginDelegate?.hideSpinner()
+                                self.saveLoggedState(email: email, password: password)
+                                self.loginDelegate?.transtionToPlatformSelection()
+                            } else {
+                                 // If there is an error while signing in the user then it will display the error on the screen.
+                                self.loginDelegate?.hideSpinner()
+                                self.showError(error!)
+                            }
+                        }
+                    }
                 }
+                if adminFound == false {
+                    self.showError("Email not found.")
+                }
+            } else if loginDelegate?.user == User.employee {
+                
+                DatabaseManager.shared.signInUser(email: email, password: password) { (successful, error) in
+                    if successful == true {
+                        // If there is no error the signing in will be successfull and it will transit to Platform selection page.
+                         self.saveLoggedState(email: email, password: password)
+                         self.loginDelegate?.transtionToPlatformSelection()
+                    } else {
+                         // If there is an error while signing in the user then it will display the error on the screen.
+                        self.showError(error!)
+                    }
+                }
+            }
+        }
+    }
+    
+    //fetch admin details to match admin email.
+    func fetchAdminDetails() {
+        DatabaseManager.shared.takeSnapshotOfAdminDetails { (adminDetails) in
+            self.adminData = adminDetails
+            if self.adminData?.count != 0 {
+                 self.loginDelegate?.hideSpinner()
             }
         }
     }
@@ -78,5 +114,6 @@ class LoginPresenter {
         }
         def.synchronize()
     }
+    
     
 }
